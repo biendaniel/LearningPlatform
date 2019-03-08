@@ -70,10 +70,37 @@ import java.util.List;
             this.currentTransaction = currentTransaction;
         }
 
+        @Override
+        public void persist(User entity) {
+        getCurrentSession().save(entity);
+        }
+
+        @Override
+        public void update(User entity) {
+        getCurrentSession().update(entity);
+        }
+
+        @Override
+        public User findById(Integer id) {
+            User user = getCurrentSession().get(User.class, id);
+            return user;
+        }
+
+
+        @Override
+        public void delete(User entity) {
+        getCurrentSession().delete(entity);
+        }
+
         @SuppressWarnings("unchecked")
         public List<User> findAll() {
             List<User> users = (List<User>) getCurrentSession().createQuery("from User").list();
             return users;
+        }
+
+        @Override
+        public void deleteAll() {
+
         }
     }
 
