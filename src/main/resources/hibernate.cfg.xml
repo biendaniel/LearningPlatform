@@ -5,22 +5,29 @@
 <hibernate-configuration>
     <session-factory>
         <!-- JDBC Database connection settings -->
-        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7281970?useSSL=false</property>
-        <property name="connection.username">sql7281970</property>
-        <property name="connection.password">mwZ365b61s</property>
+        <!--<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>-->
+        <!--<property name="connection.url">jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7281970?useSSL=false</property>-->
+        <!--<property name="connection.username">sql7281970</property>-->
+        <!--<property name="connection.password">mwZ365b61s</property>-->
 
+
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <!--<property name="connection.url">jdbc:mysql://learningplatform.c2gsv4di4gzq.us-east-2.rds.amazonaws.com:3306/eLearning?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</property>-->
+        <property name="connection.url">jdbc:mysql://localhost:3306/localdb?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">password</property>
+        <!--?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC-->
         <!-- JDBC connection pool settings ... using built-in test pool -->
         <property name="connection.pool_size">1</property>
 
         <!-- Select our SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 
         <!-- Echo the SQL to stdout -->
         <property name="show_sql">true</property>
-        <property name="hibernate.connection.isolation">1</property>
         <!-- Set the current session context -->
-        <property name="current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
+        <property name="current_session_context_class">thread</property>
+        <property name="hbm2ddl.auto">update</property>
         <mapping class="model.User"/>
 
     </session-factory>

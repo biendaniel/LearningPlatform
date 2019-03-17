@@ -15,5 +15,6 @@ public interface DaoInterface<T, Id extends Serializable> {
     List<T> findAll();
 
      void deleteAll();
+
     }
 
