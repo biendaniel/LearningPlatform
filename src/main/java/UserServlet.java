@@ -20,7 +20,6 @@ public class UserServlet {
     @GET
     @Path("/login")
     public Response getUserByLoginAndPassword(User user) {
-
         User theUser = userService.getUserByLoginAndPassword(user.getUsername(), user.getPassword());
         return Response.ok(user).build();
     }

@@ -58,7 +58,7 @@ public class UserService {
         return user;
     }
 
-    public int createUser(User user) {
+    public Integer createUser(User user) {
         userDao.openCurrentSessionwithTransaction();
         Integer idUser = userDao.createUser(user);
         userDao.closeCurrentSessionwithTransaction();
