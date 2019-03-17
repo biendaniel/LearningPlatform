@@ -16,7 +16,6 @@ import org.hibernate.cfg.Configuration;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.Query;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @ApplicationScoped
 public class UserDao implements DaoInterface<User, Integer> {
@@ -74,8 +73,8 @@ public class UserDao implements DaoInterface<User, Integer> {
     }
 
     @Override
-    public void persist(User entity) {
-        getCurrentSession().save(entity);
+    public Integer createUser(User entity) {
+        return (Integer) getCurrentSession().save(entity);
     }
 
     @Override
@@ -90,14 +89,14 @@ public class UserDao implements DaoInterface<User, Integer> {
     }
 
     @SuppressWarnings("unchecked")
-    public User findByUsernameAndPassword(String username, String password) {
+    public User findUserByUsernameAndPassword(String username, String password) {
         Query query = getCurrentSession().createQuery("FROM User WHERE username = :username AND password = :password ");
         query.setParameter("username", username);
         query.setParameter("password", password);
         User user = null;
         try {
-        user = (User) query.getSingleResult();
-        } catch(Exception e){
+            user = (User) query.getSingleResult();
+        } catch (Exception e) {
             return user;
         }
         return user;
@@ -117,18 +116,6 @@ public class UserDao implements DaoInterface<User, Integer> {
     public void deleteAll() {
     }
 
-    public int createUser(User user) {
-        Query query =   getCurrentSession().createQuery("SELECT MAX(id) FROM User");
-        int id = (int) query.getSingleResult();
-        persist(user);
-        return ++id;
-    }
-//
-//    public int createReservation(Reservation reservation) {
-//        Query query =   getCurrentSession().createQuery("SELECT MAX(id) FROM User");
-//        int id = (int) query.getSingleResult();
-//        reservations.put(id, reservation);
-//        return id;
-//    }
 }
+
 

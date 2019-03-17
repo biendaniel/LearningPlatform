@@ -20,7 +20,7 @@ public class UserService {
 
     public void persist(User entity) {
         userDao.openCurrentSessionwithTransaction();
-        userDao.persist(entity);
+        userDao.createUser(entity);
         userDao.closeCurrentSessionwithTransaction();
     }
 
@@ -51,18 +51,18 @@ public class UserService {
         return users;
     }
 
-    public User checkUserData(String username, String password) {
+    public User getUserByLoginAndPassword(String username, String password) {
         userDao.openCurrentSession();
-        User user = userDao.findByUsernameAndPassword(username, password);
+        User user = userDao.findUserByUsernameAndPassword(username, password);
         userDao.closeCurrentSession();
         return user;
     }
 
     public int createUser(User user) {
         userDao.openCurrentSessionwithTransaction();
-        int id = userDao.createUser(user);
+        Integer idUser = userDao.createUser(user);
         userDao.closeCurrentSessionwithTransaction();
-        return id;
+        return idUser;
     }
 
     public UserDao userDao() {

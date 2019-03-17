@@ -19,9 +19,9 @@ public class UserServlet {
     //    @Author("Daniel")
     @GET
     @Path("/login")
-    public Response checkLoginAndPassword(User dataFromUser) {
+    public Response getUserByLoginAndPassword(User user) {
 
-        User user = userService.checkUserData(dataFromUser.getUsername(), dataFromUser.getPassword());
+        User theUser = userService.getUserByLoginAndPassword(user.getUsername(), user.getPassword());
         return Response.ok(user).build();
     }
 
@@ -32,15 +32,8 @@ public class UserServlet {
     }
 
     @PUT
-    public Response addUser(User user) {
-        int id = userService.createUser(user);
-        URI location = null;
-        try {
-            location = new URI("/" + id);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return Response.created(location).build();
+    public Integer createUser(User user) {
+        return userService.createUser(user);
     }
 
     @GET
