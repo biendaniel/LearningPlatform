@@ -1,5 +1,6 @@
 import model.User;
 import service.UserService;
+import service.UserServiceH2;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -7,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 
 @Path("/users")
@@ -16,12 +18,21 @@ public class UserServlet {
     @Inject
     private UserService userService;
 
-    //    @Author("Daniel")
     @GET
-    @Path("/login")
+    @Path("/authorization")
     public Response getUserByLoginAndPassword(User user) {
         User theUser = userService.getUserByLoginAndPassword(user.getUsername(), user.getPassword());
-        return Response.ok(user).build();
+        return Response.ok(theUser).build();
+    }
+
+    @POST
+    @Path("/registration")
+    public boolean registrationUser(User user) {
+        if (userService.checkUniquenessUsername(user)) {
+            userService.createUser(user);
+            return true;
+        }
+        return false;
     }
 
     @GET
@@ -31,8 +42,8 @@ public class UserServlet {
     }
 
     @PUT
-    public Integer createUser(User user) {
-        return userService.createUser(user);
+    public void createUser(User user) {
+        userService.createUser(user);
     }
 
     @GET
@@ -42,12 +53,13 @@ public class UserServlet {
         return Response.ok(user).build();
     }
 
+
     @DELETE
     @Path("/{id}")
     public boolean deleteUser(@PathParam("id") Integer id) {
         try {
             userService.delete(id);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
         return true;

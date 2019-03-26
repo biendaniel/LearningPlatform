@@ -18,12 +18,6 @@ public class UserService {
         userDao = new UserDao();
     }
 
-    public void persist(User entity) {
-        userDao.openCurrentSessionwithTransaction();
-        userDao.createUser(entity);
-        userDao.closeCurrentSessionwithTransaction();
-    }
-
     public void update(User entity) {
         userDao.openCurrentSessionwithTransaction();
         userDao.update(entity);
@@ -65,6 +59,15 @@ public class UserService {
         return idUser;
     }
 
+    public boolean checkUniquenessUsername(User user) {
+        List<User> users = findAll();
+        for(User it: users) {
+            if(it.getUsername().equalsIgnoreCase(user.getUsername())) {
+                return false;
+            }
+        }
+        return true;
+    }
     public UserDao userDao() {
         return userDao;
 
