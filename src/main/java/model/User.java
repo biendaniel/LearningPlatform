@@ -1,48 +1,36 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
     private Integer id;
-
-        @Column(name="first_name")
-    private String firstName;
-
-        @Column(name="last_name")
-    private String lastName;
-
-        @Column(name="email")
-    private String email;
-
-        @Column(name="login")
     private String username;
-
-        @Column(name="password")
     private String password;
+    private String firstName;
+    private String lastName;
+    private String email;
+    @ManyToOne
+    private Role role;
+    private boolean isPremium;
+    private boolean isBlocked;
 
-
-    public User() {
-    }
-
-
-    public User(String firstName, String lastName, String email, String username, String password) {
+    public User(String username, String password, String firstName, String lastName, String email, Role role, boolean isPremium, boolean isBlocked) {
+        this.username = username;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.username = username;
-        this.password = password;
+        this.role = role;
+        this.isPremium = isPremium;
+        this.isBlocked = isBlocked;
     }
 
+    public User() {
+    }
 
     public Integer getId() {
         return id;
@@ -50,6 +38,22 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -76,24 +80,42 @@ public class User {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public Role getRole() {
+        return role;
     }
 
-    public void setUsername(String userId) {
-        this.username = userId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public String getPassword() {
-        return password;
+    public boolean isPremium() {
+        return isPremium;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPremium(boolean premium) {
+        isPremium = premium;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + " " + email + " " + username + " " + password + '\n';
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", isPremium=" + isPremium +
+                ", isBlocked=" + isBlocked +
+                '}';
     }
 }

@@ -2,9 +2,10 @@ package dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 public interface DaoInterface<T, Id extends Serializable> {
-     Integer createUser(T entity);
+     Integer create(T entity);
 
      void update(T entity);
 

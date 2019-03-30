@@ -1,20 +1,19 @@
+package controllers;
+
 import model.User;
 import service.UserService;
-import service.UserServiceH2;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class UserServlet {
+public class UserController {
     @Inject
     private UserService userService;
 
@@ -25,7 +24,7 @@ public class UserServlet {
         return Response.ok(theUser).build();
     }
 
-    @POST
+    @PUT
     @Path("/registration")
     public boolean registrationUser(User user) {
         if (userService.checkUniquenessUsername(user)) {
@@ -41,8 +40,11 @@ public class UserServlet {
         return Response.ok(users).build();
     }
 
-    @PUT
-    public void createUser(User user) {
+
+    @Path("/{id}")
+    @PATCH  // Nie wiem jak to zrobić tak, by zmieniać tylko wybrane dane
+    public void editUser(@PathParam("id") Integer id, User user) {
+        User loadedUser = userService.findById(id);
         userService.createUser(user);
     }
 

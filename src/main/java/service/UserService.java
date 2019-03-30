@@ -1,11 +1,14 @@
 package service;
 
+import dao.ConnectionDB;
 import dao.UserDao;
+import model.Role;
 import model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Set;
 
 
 @ApplicationScoped
@@ -13,49 +16,54 @@ public class UserService {
 
     @Inject
     private UserDao userDao;
+    @Inject
+    private RoleService roleService;
 
+    @Inject
+    private ConnectionDB connectionDB;
     public UserService() {
         userDao = new UserDao();
+        roleService = new RoleService();
     }
 
     public void update(User entity) {
-        userDao.openCurrentSessionwithTransaction();
+        connectionDB.openCurrentSessionwithTransaction();
         userDao.update(entity);
-        userDao.closeCurrentSessionwithTransaction();
+        connectionDB.closeCurrentSessionwithTransaction();
     }
 
     public User findById(Integer id) {
-        userDao.openCurrentSession();
+        connectionDB.openCurrentSession();
         User user = userDao.findById(id);
-        userDao.closeCurrentSession();
+        connectionDB.closeCurrentSession();
         return user;
     }
 
     public void delete(Integer id) {
-        userDao.openCurrentSessionwithTransaction();
+        connectionDB.openCurrentSessionwithTransaction();
         User user = userDao.findById(id);
         userDao.delete(user);
-        userDao.closeCurrentSessionwithTransaction();
+        connectionDB.closeCurrentSessionwithTransaction();
     }
 
     public List<User> findAll() {
-        userDao.openCurrentSession();
+        connectionDB.openCurrentSession();
         List<User> users = userDao.findAll();
-        userDao.closeCurrentSession();
+        connectionDB.closeCurrentSession();
         return users;
     }
 
     public User getUserByLoginAndPassword(String username, String password) {
-        userDao.openCurrentSession();
+        connectionDB.openCurrentSession();
         User user = userDao.findUserByUsernameAndPassword(username, password);
-        userDao.closeCurrentSession();
+        connectionDB.closeCurrentSession();
         return user;
     }
 
     public Integer createUser(User user) {
-        userDao.openCurrentSessionwithTransaction();
-        Integer idUser = userDao.createUser(user);
-        userDao.closeCurrentSessionwithTransaction();
+        connectionDB.openCurrentSessionwithTransaction();
+        Integer idUser = userDao.create(user);
+        connectionDB.closeCurrentSessionwithTransaction();
         return idUser;
     }
 
