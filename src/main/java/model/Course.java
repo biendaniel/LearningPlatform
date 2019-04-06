@@ -1,6 +1,10 @@
 package model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Course {
@@ -10,12 +14,22 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @OneToMany
+    @ManyToOne
     private Subject subject;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "courseID")
+    private List<CourseChapter> chapters;
 
-    public Course(String name, Subject subject) {
-        this.name = name;
-        this.subject = subject;
+    public Course() {
+
+    }
+
+    public List<CourseChapter> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(List<CourseChapter> chapters) {
+        this.chapters = chapters;
     }
 
     public Integer getId() {
@@ -41,6 +55,8 @@ public class Course {
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
+
+
 
     @Override
     public String toString() {

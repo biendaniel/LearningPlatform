@@ -1,14 +1,12 @@
 package service;
 
-import dao.ConnectionDB;
+import hibernate.ConnectionDB;
 import dao.UserDao;
-import model.Role;
 import model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Set;
 
 
 @ApplicationScoped

@@ -17,7 +17,7 @@ public class UserController {
     @Inject
     private UserService userService;
 
-    @GET
+    @PUT
     @Path("/authorization")
     public Response getUserByLoginAndPassword(User user) {
         User theUser = userService.getUserByLoginAndPassword(user.getUsername(), user.getPassword());

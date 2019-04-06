@@ -1,6 +1,8 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class CourseChapter {
@@ -11,13 +13,15 @@ public class CourseChapter {
     private Integer id;
     private String name;
     private String content;
-    @ManyToMany
-    private File file;
 
-    public CourseChapter(String name, String content, File file) {
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "chapterID")
+    private List<File> files;
+
+    public CourseChapter(String name, String content, List<File> files) {
         this.name = name;
         this.content = content;
-        this.file = file;
+        this.files = files;
     }
 
     public CourseChapter() {
@@ -47,12 +51,13 @@ public class CourseChapter {
         this.content = content;
     }
 
-    public File getFile() {
-        return file;
+
+    public List<File> getFiles() {
+        return files;
     }
 
-    public void setFile(File file) {
-        this.file = file;
+    public void setFiles(List<File> files) {
+        this.files = files;
     }
 
     @Override
@@ -61,7 +66,7 @@ public class CourseChapter {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", content='" + content + '\'' +
-                ", file=" + file +
+                ", file=" + files +
                 '}';
     }
 }

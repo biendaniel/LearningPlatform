@@ -1,24 +1,20 @@
 package model;
 
+import service.FileService;
+
+import javax.inject.Inject;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class File {
     //TODO - Tutaj stworzlem tylko pola - możliwe, że trzeba dodać jeszcze relacje
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String url;
-    @ManyToMany
-    private CourseChapter courseChapter;
-
-    public File(String name, String url, CourseChapter courseChapter) {
-        this.name = name;
-        this.url = url;
-        this.courseChapter = courseChapter;
-    }
-
     public File() {
     }
 
@@ -46,13 +42,7 @@ public class File {
         this.url = url;
     }
 
-    public CourseChapter getCourseChapter() {
-        return courseChapter;
-    }
 
-    public void setCourseChapter(CourseChapter courseChapter) {
-        this.courseChapter = courseChapter;
-    }
 
     @Override
     public String toString() {
@@ -60,7 +50,6 @@ public class File {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
-                ", courseChapter=" + courseChapter +
                 '}';
     }
 }

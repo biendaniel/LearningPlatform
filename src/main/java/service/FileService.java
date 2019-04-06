@@ -1,54 +1,56 @@
 package service;
 
-import hibernate.ConnectionDB;
+import dao.FileDao;
 import dao.RoleDao;
+import hibernate.ConnectionDB;
+import model.File;
 import model.Role;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
-
 @ApplicationScoped
-public class RoleService {
+public class FileService {
 
     @Inject
-    private RoleDao roleDao;
+    private FileDao fileDao;
 
     @Inject
     private ConnectionDB connectionDB;
-    public RoleService() {
-        roleDao = new RoleDao();
+
+    public FileService() {
+        fileDao = new FileDao();
     }
 
-    public void update(Role entity) {
+    public void update(File entity) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.update(entity);
+        fileDao.update(entity);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public Role findById(Integer id) {
+    public File findById(Integer id) {
         connectionDB.openCurrentSession();
-        Role role = roleDao.findById(id);
+        File file = fileDao.findById(id);
         connectionDB.closeCurrentSession();
-        return role;
+        return file;
     }
 
-    public List<Role> findAll() {
+    public List<File> findAll() {
         connectionDB.openCurrentSession();
-        List<Role> roles = roleDao.findAll();
+        List<File> files = fileDao.findAll();
         connectionDB.closeCurrentSession();
-        return roles;
+        return files;
     }
 
-    public void create(Role role) {
+    public void create(File file) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.create(role);
+        fileDao.create(file);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public RoleDao roleDao() {
-        return roleDao;
+    public FileDao fileDao() {
+        return fileDao;
 
     }
 }

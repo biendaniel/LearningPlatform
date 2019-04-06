@@ -1,19 +1,12 @@
 package dao;
 
 
+import hibernate.ConnectionDB;
 import model.Role;
-import model.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.Query;
 import java.util.List;
-import java.util.Set;
 
 @ApplicationScoped
 public class RoleDao implements DaoInterface<Role, Integer> {

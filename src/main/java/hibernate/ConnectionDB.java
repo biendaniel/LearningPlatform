@@ -1,7 +1,6 @@
-package dao;
+package hibernate;
 
-import model.Role;
-import model.User;
+import model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -41,7 +40,13 @@ public class ConnectionDB {
     }
 
     private static SessionFactory getSessionFactory() {
-        Configuration configuration = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(User.class).addAnnotatedClass(Role.class);
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml").
+                addAnnotatedClass(User.class).
+                addAnnotatedClass(Role.class).
+                addAnnotatedClass(Course.class).
+                addAnnotatedClass(Subject.class).
+                addAnnotatedClass(CourseChapter.class).
+                addAnnotatedClass(File.class);
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties());
         return configuration.buildSessionFactory(builder.build());
