@@ -29,7 +29,7 @@ public class SubjectController {
 
     @GET
     @Path("/{id}")
-    public Subject getSubject(@PathParam("id") Integer id) {
+    public Subject getSubjectById(@PathParam("id") Integer id) {
         Subject subject = subjectService.findById(id);
         return subject;
     }

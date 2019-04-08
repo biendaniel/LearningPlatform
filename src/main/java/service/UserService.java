@@ -14,14 +14,11 @@ public class UserService {
 
     @Inject
     private UserDao userDao;
-    @Inject
-    private RoleService roleService;
 
     @Inject
     private ConnectionDB connectionDB;
     public UserService() {
         userDao = new UserDao();
-        roleService = new RoleService();
     }
 
     public void update(User entity) {

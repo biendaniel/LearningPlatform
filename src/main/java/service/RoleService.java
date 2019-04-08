@@ -47,6 +47,12 @@ public class RoleService {
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
+    public void delete(Role role) {
+        connectionDB.openCurrentSessionwithTransaction();
+        roleDao.delete(role);
+        connectionDB.closeCurrentSessionwithTransaction();
+    }
+
     public RoleDao roleDao() {
         return roleDao;
 
