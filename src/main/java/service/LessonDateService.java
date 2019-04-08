@@ -1,62 +1,60 @@
 package service;
 
-import dao.FileDao;
-import dao.RoleDao;
+import dao.LessonDateDao;
 import hibernate.ConnectionDB;
-import model.File;
-import model.Role;
+import model.LessonDate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
-public class FileService {
+public class LessonDateService {
 
     @Inject
-    private FileDao fileDao;
+    private LessonDateDao lessonDateDao;
 
     @Inject
     private ConnectionDB connectionDB;
 
-    public FileService() {
-        fileDao = new FileDao();
+    public LessonDateService() {
+        lessonDateDao = new LessonDateDao();
     }
 
-    public void update(File entity) {
+    public void update(LessonDate entity) {
         connectionDB.openCurrentSessionwithTransaction();
-        fileDao.update(entity);
+        lessonDateDao.update(entity);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public File findById(Integer id) {
+    public LessonDate findById(Integer id) {
         connectionDB.openCurrentSession();
-        File file = fileDao.findById(id);
+        LessonDate lessonDate = lessonDateDao.findById(id);
         connectionDB.closeCurrentSession();
-        return file;
+        return lessonDate;
     }
 
-    public List<File> findAll() {
+    public List<LessonDate> findAll() {
         connectionDB.openCurrentSession();
-        List<File> files = fileDao.findAll();
+        List<LessonDate> lessonDates = lessonDateDao.findAll();
         connectionDB.closeCurrentSession();
-        return files;
+        return lessonDates;
     }
 
-    public void create(File file) {
+    public void create(LessonDate lessonDate) {
         connectionDB.openCurrentSessionwithTransaction();
-        fileDao.create(file);
+        lessonDateDao.create(lessonDate);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public void delete(File file) {
+    public void delete(LessonDate lessonDate) {
         connectionDB.openCurrentSessionwithTransaction();
-        fileDao.delete(file);
+        lessonDateDao.delete(lessonDate);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public FileDao fileDao() {
-        return fileDao;
+    public LessonDateDao lessonDateDao() {
+        return lessonDateDao;
 
     }
 }

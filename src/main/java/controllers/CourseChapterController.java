@@ -1,6 +1,7 @@
 package controllers;
 
 import model.CourseChapter;
+import model.File;
 import service.CourseChapterService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -25,10 +26,39 @@ public class CourseChapterController {
         return courseChapters;
     }
 
-
-
     @PUT
     public void addCourseChapter(CourseChapter courseChapter) {
         courseChapterService.create(courseChapter);
+    }
+
+
+    @GET
+    @Path("/{id}")
+    public CourseChapter getCourseChapterById(@PathParam("id") Integer id) {
+        CourseChapter courseChapter = courseChapterService.findById(id);
+        return courseChapter;
+    }
+
+    @PATCH
+    @Path("/{id}")
+    public void editCourseChapter(@PathParam("id") Integer id, CourseChapter courseChapter) {
+        CourseChapter loadedCourseChapter = courseChapterService.findById(id);
+        if(courseChapter.getName() != null) {
+            loadedCourseChapter.setName(courseChapter.getName());
+        }
+        if(courseChapter.getContent() != null) {
+            loadedCourseChapter.setContent(courseChapter.getContent());
+        }
+        if(courseChapter.getFiles() != null) {
+            loadedCourseChapter.setFiles(courseChapter.getFiles());
+        }
+        courseChapterService.update(loadedCourseChapter);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteFile(@PathParam("id") Integer id) {
+        CourseChapter loadedCourseChapter = courseChapterService.findById(id);
+        courseChapterService.delete(loadedCourseChapter);
     }
 }

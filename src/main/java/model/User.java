@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,19 +16,12 @@ public class User {
     private String email;
     @ManyToOne
     private Role role;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "opinionID")
+    private List<Opinion> opinions;
     private boolean isPremium;
     private boolean isBlocked;
-
-    public User(String username, String password, String firstName, String lastName, String email, Role role, boolean isPremium, boolean isBlocked) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.role = role;
-        this.isPremium = isPremium;
-        this.isBlocked = isBlocked;
-    }
+    private boolean isVerified;
 
     public User() {
     }
@@ -102,6 +96,22 @@ public class User {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public List<Opinion> getOpinions() {
+        return opinions;
+    }
+
+    public void setOpinions(List<Opinion> opinions) {
+        this.opinions = opinions;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
     }
 
     @Override

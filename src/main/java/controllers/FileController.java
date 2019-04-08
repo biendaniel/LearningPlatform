@@ -18,8 +18,6 @@ public class FileController {
 
     @GET
     public List<File> getFileList() {
-        File file = fileService.findById(1);
-        System.out.println(file);
         List<File> files = fileService.findAll();
         return files;
     }
@@ -29,4 +27,30 @@ public class FileController {
         fileService.create(file);
     }
 
+    @GET
+    @Path("/{id}")
+    public File getFileById(@PathParam("id") Integer id) {
+        File file = fileService.findById(id);
+        return file;
+    }
+
+    @PATCH
+    @Path("/{id}")
+    public void editFile(@PathParam("id") Integer id, File file) {
+        File loadedFile = fileService.findById(id);
+        if(file.getName() != null) {
+            loadedFile.setName(file.getName());
+        }
+        if(file.getUrl() != null) {
+            loadedFile.setUrl(file.getUrl());
+        }
+        fileService.update(loadedFile);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteFile(@PathParam("id") Integer id) {
+        File loadedFile = fileService.findById(id);
+        fileService.delete(loadedFile);
+    }
 }

@@ -43,4 +43,9 @@ public class FileDao implements DaoInterface<File, Integer>{
     public void deleteAll() {
 
     }
+
+    @Override
+    public File findByName(String name) {
+        return null;
+    }
 }

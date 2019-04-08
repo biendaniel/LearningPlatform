@@ -2,23 +2,32 @@ package model;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
 
+
 @Entity
 public class Course {
 
-    //TODO - Tutaj stworzlem tylko pola - możliwe, że trzeba dodać jeszcze relacje
+    //TODO - Póki co przy edycji trzeba podawać dotychczasową listę chapterów, by ich nie usunąć z rozdziału
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     @ManyToOne
     private Subject subject;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany()
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "courseID")
     private List<CourseChapter> chapters;
+    @OneToMany()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "opinionID")
+    private List<Opinion> opinions;
 
     public Course() {
 
@@ -56,7 +65,13 @@ public class Course {
         this.subject = subject;
     }
 
+    public List<Opinion> getOpinions() {
+        return opinions;
+    }
 
+    public void setOpinions(List<Opinion> opinions) {
+        this.opinions = opinions;
+    }
 
     @Override
     public String toString() {

@@ -1,57 +1,60 @@
 package service;
 
+import dao.OpinionDao;
 import hibernate.ConnectionDB;
-import dao.SubjectDao;
-import model.Subject;
-import model.User;
+import model.Opinion;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
-public class SubjectService {
+public class OpinionService {
 
     @Inject
-    private SubjectDao subjectDao;
+    private OpinionDao opinionDao;
 
     @Inject
     private ConnectionDB connectionDB;
 
-    public SubjectService() {
-          subjectDao = new SubjectDao(); // usunąłem to, bo wydaje się być zbędne
+    public OpinionService() {
+        opinionDao = new OpinionDao();
     }
 
-    public void create(Subject subject) {
+    public void update(Opinion entity) {
         connectionDB.openCurrentSessionwithTransaction();
-        subjectDao.create(subject);
+        opinionDao.update(entity);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public List<Subject> findAll() {
+    public Opinion findById(Integer id) {
         connectionDB.openCurrentSession();
-        List<Subject> subjects = subjectDao.findAll();
+        Opinion opinion = opinionDao.findById(id);
         connectionDB.closeCurrentSession();
-        return subjects;
+        return opinion;
     }
 
-    public Subject findById(Integer id) {
+    public List<Opinion> findAll() {
         connectionDB.openCurrentSession();
-        Subject subject = subjectDao.findById(id);
+        List<Opinion> opinions = opinionDao.findAll();
         connectionDB.closeCurrentSession();
-        return subject;
+        return opinions;
     }
 
-    public void update(Subject subject) {
+    public void create(Opinion opinion) {
         connectionDB.openCurrentSessionwithTransaction();
-        subjectDao.update(subject);
+        opinionDao.create(opinion);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public void delete(Subject subject) {
+    public void delete(Opinion opinion) {
         connectionDB.openCurrentSessionwithTransaction();
-        subjectDao.delete(subject);
+        opinionDao.delete(opinion);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
+    public OpinionDao opinionDao() {
+        return opinionDao;
+
+    }
 }

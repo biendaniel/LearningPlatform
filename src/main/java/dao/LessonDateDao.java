@@ -1,42 +1,44 @@
 package dao;
 
+import dao.DaoInterface;
 import hibernate.ConnectionDB;
-import model.Subject;
+import model.LessonDate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
-public class SubjectDao implements DaoInterface<Subject, Integer> {
+public class LessonDateDao implements DaoInterface<LessonDate, Integer> {
 
     @Inject
     private ConnectionDB connectionDB;
 
     @Override
-    public Integer create(Subject entity) {
+    public Integer create(LessonDate entity) {
         return (Integer) connectionDB.getCurrentSession().save(entity);
     }
 
     @Override
-    public void update(Subject entity) {
+    public void update(LessonDate entity) {
         connectionDB.getCurrentSession().update(entity);
+
     }
 
     @Override
-    public Subject findById(Integer integer) {
-        return connectionDB.getCurrentSession().get(Subject.class, integer);
+    public LessonDate findById(Integer id) {
+        LessonDate lessonDate = connectionDB.getCurrentSession().get(LessonDate.class, id);
+        return lessonDate;
     }
 
     @Override
-    public void delete(Subject entity) {
+    public void delete(LessonDate entity) {
         connectionDB.getCurrentSession().delete(entity);
-
     }
 
     @Override
-    public List<Subject> findAll() {
-        return connectionDB.getCurrentSession().createQuery("FROM Subject").list();
+    public List<LessonDate> findAll() {
+        return connectionDB.getCurrentSession().createQuery("from LessonDate").list();
     }
 
     @Override
@@ -45,7 +47,7 @@ public class SubjectDao implements DaoInterface<Subject, Integer> {
     }
 
     @Override
-    public Subject findByName(String name) {
+    public LessonDate findByName(String name) {
         return null;
     }
 }

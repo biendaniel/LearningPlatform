@@ -41,12 +41,15 @@ public class ConnectionDB {
 
     private static SessionFactory getSessionFactory() {
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml").
-                addAnnotatedClass(User.class).
-                addAnnotatedClass(Role.class).
-                addAnnotatedClass(Course.class).
-                addAnnotatedClass(Subject.class).
-                addAnnotatedClass(CourseChapter.class).
-                addAnnotatedClass(File.class);
+                addAnnotatedClass(User.class)
+                .addAnnotatedClass(Role.class)
+                .addAnnotatedClass(Course.class)
+                .addAnnotatedClass(Subject.class)
+                .addAnnotatedClass(CourseChapter.class)
+                .addAnnotatedClass(File.class)
+                .addAnnotatedClass(Opinion.class)
+                .addAnnotatedClass(Lesson.class)
+                .addAnnotatedClass(LessonDate.class);
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties());
         return configuration.buildSessionFactory(builder.build());

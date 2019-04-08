@@ -1,42 +1,43 @@
 package dao;
 
 import hibernate.ConnectionDB;
-import model.Subject;
+import model.Opinion;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
-public class SubjectDao implements DaoInterface<Subject, Integer> {
+public class OpinionDao implements DaoInterface<Opinion, Integer> {
 
     @Inject
     private ConnectionDB connectionDB;
 
     @Override
-    public Integer create(Subject entity) {
+    public Integer create(Opinion entity) {
         return (Integer) connectionDB.getCurrentSession().save(entity);
     }
 
     @Override
-    public void update(Subject entity) {
+    public void update(Opinion entity) {
         connectionDB.getCurrentSession().update(entity);
+
     }
 
     @Override
-    public Subject findById(Integer integer) {
-        return connectionDB.getCurrentSession().get(Subject.class, integer);
+    public Opinion findById(Integer id) {
+        Opinion opinion = connectionDB.getCurrentSession().get(Opinion.class, id);
+        return opinion;
     }
 
     @Override
-    public void delete(Subject entity) {
+    public void delete(Opinion entity) {
         connectionDB.getCurrentSession().delete(entity);
-
     }
 
     @Override
-    public List<Subject> findAll() {
-        return connectionDB.getCurrentSession().createQuery("FROM Subject").list();
+    public List<Opinion> findAll() {
+        return connectionDB.getCurrentSession().createQuery("from Opinion").list();
     }
 
     @Override
@@ -45,7 +46,7 @@ public class SubjectDao implements DaoInterface<Subject, Integer> {
     }
 
     @Override
-    public Subject findByName(String name) {
+    public Opinion findByName(String name) {
         return null;
     }
 }

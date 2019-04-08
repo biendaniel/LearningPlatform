@@ -57,15 +57,25 @@ public class UserController {
         if (user.isPremium()) {
             loadedUser.setPremium(true);
         }
+        if (user.getOpinions() != null) {
+            loadedUser.setOpinions(user.getOpinions());
+        }
 
         userService.update(loadedUser);
     }
 
     @GET
     @Path("/{id}")
-    public Response getUserById(@PathParam("id") Integer id) {
+    public User getUserById(@PathParam("id") Integer id) {
         User user = userService.findById(id);
-        return Response.ok(user).build();
+        return user;
+    }
+
+    @GET
+    @Path("/username")
+    public User getUserByName(User enteredUser) {
+        User user = userService.findByName(enteredUser.getUsername());
+        return user;
     }
 
 

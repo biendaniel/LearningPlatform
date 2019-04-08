@@ -42,10 +42,10 @@ public class UserDao implements DaoInterface<User, Integer> {
         User user = null;
         try {
             user = (User) query.getSingleResult();
+            return user;
         } catch (Exception e) {
             return user;
         }
-        return user;
     }
 
     @Override
@@ -58,8 +58,23 @@ public class UserDao implements DaoInterface<User, Integer> {
         return (List<User>) connectionDB.getCurrentSession().createQuery("from User").list();
     }
 
+
     @Override
     public void deleteAll() {
+    }
+
+    @Override
+    public User findByName(String name) {
+        Query query = connectionDB.getCurrentSession().createQuery("FROM User WHERE username = :name ");
+        query.setParameter("name", name);
+        User user = null;
+        try {
+            user = (User) query.getSingleResult();
+            return user;
+        } catch(Exception e) {
+            return user;
+        }
+
     }
 
 }

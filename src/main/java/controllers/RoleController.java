@@ -39,8 +39,9 @@ public class RoleController {
     @PATCH
     @Path("/{id}")
     public void editRole(@PathParam("id") Integer id, Role role) {
-        Role loadedRole = roleService.findById(id);
+
         if(role.getName() != null) {
+            Role loadedRole = roleService.findById(id);
             loadedRole.setName(role.getName());
             roleService.update(loadedRole);
         }

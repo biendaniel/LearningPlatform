@@ -42,4 +42,9 @@ public class CourseChapterDao implements DaoInterface<CourseChapter, Integer> {
     public void deleteAll() {
 //TODO
     }
+
+    @Override
+    public CourseChapter findByName(String name) {
+        return null;
+    }
 }

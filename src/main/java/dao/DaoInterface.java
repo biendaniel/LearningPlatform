@@ -17,5 +17,7 @@ public interface DaoInterface<T, Id extends Serializable> {
 
      void deleteAll();
 
+     T findByName(String name);
+
     }
 

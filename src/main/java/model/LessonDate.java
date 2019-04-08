@@ -11,9 +11,9 @@ public class LessonDate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private DateFormat date;
-    @OneToMany
+    @ManyToOne
     private User teacher;
-    @OneToMany
+    @ManyToOne
     private User student;
 
     public LessonDate(DateFormat date, User teacher, User student) {

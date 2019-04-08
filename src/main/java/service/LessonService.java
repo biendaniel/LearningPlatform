@@ -1,57 +1,61 @@
 package service;
 
+import dao.LessonDao;
 import hibernate.ConnectionDB;
-import dao.SubjectDao;
-import model.Subject;
-import model.User;
+import model.Lesson;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
-public class SubjectService {
+public class LessonService {
 
     @Inject
-    private SubjectDao subjectDao;
+    private LessonDao lessonDao;
 
     @Inject
     private ConnectionDB connectionDB;
 
-    public SubjectService() {
-          subjectDao = new SubjectDao(); // usunąłem to, bo wydaje się być zbędne
+    public LessonService() {
+        lessonDao = new LessonDao();
     }
 
-    public void create(Subject subject) {
+    public void update(Lesson entity) {
         connectionDB.openCurrentSessionwithTransaction();
-        subjectDao.create(subject);
+        lessonDao.update(entity);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public List<Subject> findAll() {
+    public Lesson findById(Integer id) {
         connectionDB.openCurrentSession();
-        List<Subject> subjects = subjectDao.findAll();
+        Lesson lesson = lessonDao.findById(id);
         connectionDB.closeCurrentSession();
-        return subjects;
+        return lesson;
     }
 
-    public Subject findById(Integer id) {
+    public List<Lesson> findAll() {
         connectionDB.openCurrentSession();
-        Subject subject = subjectDao.findById(id);
+        List<Lesson> lessons = lessonDao.findAll();
         connectionDB.closeCurrentSession();
-        return subject;
+        return lessons;
     }
 
-    public void update(Subject subject) {
+    public void create(Lesson lesson) {
         connectionDB.openCurrentSessionwithTransaction();
-        subjectDao.update(subject);
+        lessonDao.create(lesson);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public void delete(Subject subject) {
+    public void delete(Lesson lesson) {
         connectionDB.openCurrentSessionwithTransaction();
-        subjectDao.delete(subject);
+        lessonDao.delete(lesson);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
+    public LessonDao lessonDao() {
+        return lessonDao;
+
+    }
 }
+
