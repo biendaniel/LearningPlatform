@@ -20,6 +20,7 @@ public class SubjectDao implements DaoInterface<Subject, Integer> {
 
     @Override
     public void update(Subject entity) {
+        connectionDB.getCurrentSession().update(entity);
     }
 
     @Override
@@ -29,6 +30,7 @@ public class SubjectDao implements DaoInterface<Subject, Integer> {
 
     @Override
     public void delete(Subject entity) {
+        connectionDB.getCurrentSession().delete(entity);
 
     }
 
