@@ -22,7 +22,7 @@ public class Course {
     private Subject subject;
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "courseID")
+    @JoinColumn(name = "chaptersID")
     private List<CourseChapter> chapters;
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
