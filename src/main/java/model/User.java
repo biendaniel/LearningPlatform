@@ -1,5 +1,8 @@
 package model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,7 +19,12 @@ public class User {
     private String email;
     @ManyToOne
     private Role role;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "courseID")
+    private List<Course> courses;
+    @OneToMany()
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "opinionID")
     private List<Opinion> opinions;
     private boolean isPremium;
@@ -112,6 +120,14 @@ public class User {
 
     public void setVerified(boolean verified) {
         isVerified = verified;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     @Override

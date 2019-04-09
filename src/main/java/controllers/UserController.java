@@ -60,6 +60,9 @@ public class UserController {
         if (user.getOpinions() != null) {
             loadedUser.setOpinions(user.getOpinions());
         }
+        if(user.getCourses() != null) {
+            loadedUser.setCourses(user.getCourses());
+        }
 
         userService.update(loadedUser);
     }
