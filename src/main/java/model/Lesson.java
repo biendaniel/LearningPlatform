@@ -11,9 +11,9 @@ public class Lesson {
     private Integer id;
     private String name;
     private Integer cost;
-    @OneToMany
+    @ManyToOne
     private User teacher;
-    @OneToMany
+    @ManyToOne
     private Subject subject;
 
     public Lesson(String name, Integer cost, User teacher, Subject subject) {

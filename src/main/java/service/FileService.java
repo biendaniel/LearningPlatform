@@ -49,6 +49,12 @@ public class FileService {
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
+    public void delete(File file) {
+        connectionDB.openCurrentSessionwithTransaction();
+        fileDao.delete(file);
+        connectionDB.closeCurrentSessionwithTransaction();
+    }
+
     public FileDao fileDao() {
         return fileDao;
 

@@ -42,17 +42,40 @@ public class UserController {
 
 
     @Path("/{id}")
-    @PATCH  // Nie wiem jak to zrobić tak, by zmieniać tylko wybrane dane
+    @PATCH
     public void editUser(@PathParam("id") Integer id, User user) {
         User loadedUser = userService.findById(id);
-        userService.createUser(user);
+        if (user.getEmail() != null) {
+            loadedUser.setEmail(user.getEmail());
+        }
+        if (user.getPassword() != null) {
+            loadedUser.setPassword(user.getPassword());
+        }
+        if (user.isBlocked()) {
+            loadedUser.setBlocked(true);
+        }
+        if (user.isPremium()) {
+            loadedUser.setPremium(true);
+        }
+        if (user.getOpinions() != null) {
+            loadedUser.setOpinions(user.getOpinions());
+        }
+
+        userService.update(loadedUser);
     }
 
     @GET
     @Path("/{id}")
-    public Response getUserById(@PathParam("id") Integer id) {
+    public User getUserById(@PathParam("id") Integer id) {
         User user = userService.findById(id);
-        return Response.ok(user).build();
+        return user;
+    }
+
+    @GET
+    @Path("/username")
+    public User getUserByName(User enteredUser) {
+        User user = userService.findByName(enteredUser.getUsername());
+        return user;
     }
 
 

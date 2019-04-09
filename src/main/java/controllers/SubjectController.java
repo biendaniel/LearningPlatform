@@ -1,5 +1,4 @@
 package controllers;
-
 import model.Subject;
 import service.SubjectService;
 
@@ -18,9 +17,9 @@ public class SubjectController {
     SubjectService subjectService;
 
     @GET
-    public Response getSubjectList() {
+    public List<Subject> getSubjectList() {
         List<Subject> subjects = subjectService.findAll();
-        return Response.ok(subjects).build();
+        return subjects;
     }
 
     @PUT
@@ -28,16 +27,27 @@ public class SubjectController {
         subjectService.create(subject);
     }
 
-//    @PATCH
-//    @Path("/{id}")
-//    public boolean updateSubject(@PathParam("id") Integer id, Subject subject) {
-//
-//        try {
-//            subjectService.update();
-//            subjectService.update(subject);
-//            return true;
-//        }catch(Exception e) {
-//            return false;
-//        }
-//    }
+    @GET
+    @Path("/{id}")
+    public Subject getSubjectById(@PathParam("id") Integer id) {
+        Subject subject = subjectService.findById(id);
+        return subject;
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void removeSubject(@PathParam("id") Integer id) {
+        Subject subject = subjectService.findById(id);
+        subjectService.delete(subject);
+    }
+    @PATCH
+    @Path("/{id}")
+    public void updateSubject(@PathParam("id") Integer id, Subject subject) {
+
+        if(subject.getName() != null) {
+            Subject loadedSubject = subjectService.findById(id);
+            loadedSubject.setName(subject.getName());
+            subjectService.update(loadedSubject);
+        }
+    }
 }

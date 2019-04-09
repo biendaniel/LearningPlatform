@@ -1,60 +1,60 @@
 package service;
 
+import dao.OpinionDao;
 import hibernate.ConnectionDB;
-import dao.RoleDao;
-import model.Role;
+import model.Opinion;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
-
 @ApplicationScoped
-public class RoleService {
+public class OpinionService {
 
     @Inject
-    private RoleDao roleDao;
+    private OpinionDao opinionDao;
 
     @Inject
     private ConnectionDB connectionDB;
-    public RoleService() {
-        roleDao = new RoleDao();
+
+    public OpinionService() {
+        opinionDao = new OpinionDao();
     }
 
-    public void update(Role entity) {
+    public void update(Opinion entity) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.update(entity);
+        opinionDao.update(entity);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public Role findById(Integer id) {
+    public Opinion findById(Integer id) {
         connectionDB.openCurrentSession();
-        Role role = roleDao.findById(id);
+        Opinion opinion = opinionDao.findById(id);
         connectionDB.closeCurrentSession();
-        return role;
+        return opinion;
     }
 
-    public List<Role> findAll() {
+    public List<Opinion> findAll() {
         connectionDB.openCurrentSession();
-        List<Role> roles = roleDao.findAll();
+        List<Opinion> opinions = opinionDao.findAll();
         connectionDB.closeCurrentSession();
-        return roles;
+        return opinions;
     }
 
-    public void create(Role role) {
+    public void create(Opinion opinion) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.create(role);
+        opinionDao.create(opinion);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public void delete(Role role) {
+    public void delete(Opinion opinion) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.delete(role);
+        opinionDao.delete(opinion);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public RoleDao roleDao() {
-        return roleDao;
+    public OpinionDao opinionDao() {
+        return opinionDao;
 
     }
 }

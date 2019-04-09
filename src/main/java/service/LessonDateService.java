@@ -1,60 +1,60 @@
 package service;
 
+import dao.LessonDateDao;
 import hibernate.ConnectionDB;
-import dao.RoleDao;
-import model.Role;
+import model.LessonDate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
-
 @ApplicationScoped
-public class RoleService {
+public class LessonDateService {
 
     @Inject
-    private RoleDao roleDao;
+    private LessonDateDao lessonDateDao;
 
     @Inject
     private ConnectionDB connectionDB;
-    public RoleService() {
-        roleDao = new RoleDao();
+
+    public LessonDateService() {
+        lessonDateDao = new LessonDateDao();
     }
 
-    public void update(Role entity) {
+    public void update(LessonDate entity) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.update(entity);
+        lessonDateDao.update(entity);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public Role findById(Integer id) {
+    public LessonDate findById(Integer id) {
         connectionDB.openCurrentSession();
-        Role role = roleDao.findById(id);
+        LessonDate lessonDate = lessonDateDao.findById(id);
         connectionDB.closeCurrentSession();
-        return role;
+        return lessonDate;
     }
 
-    public List<Role> findAll() {
+    public List<LessonDate> findAll() {
         connectionDB.openCurrentSession();
-        List<Role> roles = roleDao.findAll();
+        List<LessonDate> lessonDates = lessonDateDao.findAll();
         connectionDB.closeCurrentSession();
-        return roles;
+        return lessonDates;
     }
 
-    public void create(Role role) {
+    public void create(LessonDate lessonDate) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.create(role);
+        lessonDateDao.create(lessonDate);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public void delete(Role role) {
+    public void delete(LessonDate lessonDate) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.delete(role);
+        lessonDateDao.delete(lessonDate);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public RoleDao roleDao() {
-        return roleDao;
+    public LessonDateDao lessonDateDao() {
+        return lessonDateDao;
 
     }
 }

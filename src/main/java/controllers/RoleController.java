@@ -18,14 +18,41 @@ public class RoleController {
     @Inject
     RoleService roleService;
 
+    @PUT
+    public void addRole(Role role) {
+        roleService.create(role);
+    }
+
     @GET
     public Response getRoleList() {
         List<Role> roles = roleService.findAll();
     return Response.ok(roles).build();
     }
 
-    @PUT
-    public void addRole(Role role) {
-            roleService.create(role);
+    @GET
+    @Path("/{id}")
+    public Role getRoleById(@PathParam("id") Integer id) {
+        Role role = roleService.findById(id);
+        return role;
     }
+
+    @PATCH
+    @Path("/{id}")
+    public void editRole(@PathParam("id") Integer id, Role role) {
+
+        if(role.getName() != null) {
+            Role loadedRole = roleService.findById(id);
+            loadedRole.setName(role.getName());
+            roleService.update(loadedRole);
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteRole(@PathParam("id") Integer id) {
+        Role loadedRole = roleService.findById(id);
+        roleService.delete(loadedRole);
+    }
+
+
 }

@@ -51,9 +51,8 @@ public class CourseService {
         return course;
     }
 
-    public void delete(Integer id) {
+    public void delete(Course course) {
         connectionDB.openCurrentSessionwithTransaction();
-        Course course = courseDao.findById(id);
         courseDao.delete(course);
         connectionDB.closeCurrentSessionwithTransaction();
     }

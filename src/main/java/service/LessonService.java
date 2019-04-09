@@ -1,60 +1,61 @@
 package service;
 
+import dao.LessonDao;
 import hibernate.ConnectionDB;
-import dao.RoleDao;
-import model.Role;
+import model.Lesson;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
-
 @ApplicationScoped
-public class RoleService {
+public class LessonService {
 
     @Inject
-    private RoleDao roleDao;
+    private LessonDao lessonDao;
 
     @Inject
     private ConnectionDB connectionDB;
-    public RoleService() {
-        roleDao = new RoleDao();
+
+    public LessonService() {
+        lessonDao = new LessonDao();
     }
 
-    public void update(Role entity) {
+    public void update(Lesson entity) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.update(entity);
+        lessonDao.update(entity);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public Role findById(Integer id) {
+    public Lesson findById(Integer id) {
         connectionDB.openCurrentSession();
-        Role role = roleDao.findById(id);
+        Lesson lesson = lessonDao.findById(id);
         connectionDB.closeCurrentSession();
-        return role;
+        return lesson;
     }
 
-    public List<Role> findAll() {
+    public List<Lesson> findAll() {
         connectionDB.openCurrentSession();
-        List<Role> roles = roleDao.findAll();
+        List<Lesson> lessons = lessonDao.findAll();
         connectionDB.closeCurrentSession();
-        return roles;
+        return lessons;
     }
 
-    public void create(Role role) {
+    public void create(Lesson lesson) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.create(role);
+        lessonDao.create(lesson);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public void delete(Role role) {
+    public void delete(Lesson lesson) {
         connectionDB.openCurrentSessionwithTransaction();
-        roleDao.delete(role);
+        lessonDao.delete(lesson);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public RoleDao roleDao() {
-        return roleDao;
+    public LessonDao lessonDao() {
+        return lessonDao;
 
     }
 }
+

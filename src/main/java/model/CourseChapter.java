@@ -14,7 +14,7 @@ public class CourseChapter {
     private String name;
     private String content;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER )
     @JoinColumn(name = "chapterID")
     private List<File> files;
 

@@ -41,4 +41,9 @@ public class CourseDao implements DaoInterface<Course, Integer>{
     public void deleteAll() {
 
     }
+
+    @Override
+    public Course findByName(String name) {
+        return null;
+    }
 }

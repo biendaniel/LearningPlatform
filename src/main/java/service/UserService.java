@@ -14,14 +14,11 @@ public class UserService {
 
     @Inject
     private UserDao userDao;
-    @Inject
-    private RoleService roleService;
 
     @Inject
     private ConnectionDB connectionDB;
     public UserService() {
         userDao = new UserDao();
-        roleService = new RoleService();
     }
 
     public void update(User entity) {
@@ -33,6 +30,13 @@ public class UserService {
     public User findById(Integer id) {
         connectionDB.openCurrentSession();
         User user = userDao.findById(id);
+        connectionDB.closeCurrentSession();
+        return user;
+    }
+
+    public User findByName(String name) {
+        connectionDB.openCurrentSession();
+        User user = userDao.findByName(name);
         connectionDB.closeCurrentSession();
         return user;
     }

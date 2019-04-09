@@ -8,7 +8,6 @@ import javax.persistence.Id;
 @Entity
 public class Subject {
 
-    //TODO - Tutaj stworzlem tylko pola - możliwe, że trzeba dodać jeszcze relacje
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

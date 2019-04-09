@@ -11,19 +11,13 @@ public class Opinion {
     private Integer id;
     private String content;
     private Integer value;
-    @OneToMany
-    private User raterUser;
-    @OneToMany
-    private User evoaluatedUser;
-    @ManyToMany
-    private CourseChapter courseChapter;
+    @ManyToOne
+    private User raterUser; // oceniający
 
-    public Opinion(String content, Integer value, User raterUser, User evoaluatedUser, CourseChapter courseChapter) {
+    public Opinion(String content, Integer value, User raterUser) {
         this.content = content;
         this.value = value;
         this.raterUser = raterUser;
-        this.evoaluatedUser = evoaluatedUser;
-        this.courseChapter = courseChapter;
     }
 
     public Opinion() {
@@ -61,22 +55,6 @@ public class Opinion {
         this.raterUser = raterUser;
     }
 
-    public User getEvoaluatedUser() {
-        return evoaluatedUser;
-    }
-
-    public void setEvoaluatedUser(User evoaluatedUser) {
-        this.evoaluatedUser = evoaluatedUser;
-    }
-
-    public CourseChapter getCourseChapter() {
-        return courseChapter;
-    }
-
-    public void setCourseChapter(CourseChapter courseChapter) {
-        this.courseChapter = courseChapter;
-    }
-
     @Override
     public String toString() {
         return "Opinion{" +
@@ -84,8 +62,6 @@ public class Opinion {
                 ", content='" + content + '\'' +
                 ", value=" + value +
                 ", raterUser=" + raterUser +
-                ", evoaluatedUser=" + evoaluatedUser +
-                ", courseChapter=" + courseChapter +
                 '}';
     }
 }

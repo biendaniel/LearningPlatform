@@ -3,6 +3,7 @@ package service;
 import hibernate.ConnectionDB;
 import dao.SubjectDao;
 import model.Subject;
+import model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,7 +19,13 @@ public class SubjectService {
     private ConnectionDB connectionDB;
 
     public SubjectService() {
-        subjectDao = new SubjectDao();
+          subjectDao = new SubjectDao(); // usunąłem to, bo wydaje się być zbędne
+    }
+
+    public void create(Subject subject) {
+        connectionDB.openCurrentSessionwithTransaction();
+        subjectDao.create(subject);
+        connectionDB.closeCurrentSessionwithTransaction();
     }
 
     public List<Subject> findAll() {
@@ -28,15 +35,22 @@ public class SubjectService {
         return subjects;
     }
 
-    public void create(Subject subject) {
-        connectionDB.openCurrentSessionwithTransaction();
-        subjectDao.create(subject);
-        connectionDB.closeCurrentSessionwithTransaction();
+    public Subject findById(Integer id) {
+        connectionDB.openCurrentSession();
+        Subject subject = subjectDao.findById(id);
+        connectionDB.closeCurrentSession();
+        return subject;
     }
 
     public void update(Subject subject) {
         connectionDB.openCurrentSessionwithTransaction();
         subjectDao.update(subject);
+        connectionDB.closeCurrentSessionwithTransaction();
+    }
+
+    public void delete(Subject subject) {
+        connectionDB.openCurrentSessionwithTransaction();
+        subjectDao.delete(subject);
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
