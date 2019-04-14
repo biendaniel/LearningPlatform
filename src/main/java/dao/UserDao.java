@@ -30,10 +30,10 @@ public class UserDao implements DaoInterface<User, Integer> {
     }
 
     @Override
-    public User findById(Integer id) {
-        User user = connectionDB.getCurrentSession().get(User.class, id);
-        return user;
+    public User findById(Integer integer) {
+        return null;
     }
+
 
     @SuppressWarnings("unchecked")
     public User findUserByUsernameAndPassword(String username, String password) {
@@ -64,10 +64,10 @@ public class UserDao implements DaoInterface<User, Integer> {
     public void deleteAll() {
     }
 
-    @Override
-    public User findByName(String name) {
-        Query query = connectionDB.getCurrentSession().createQuery("FROM User WHERE username = :name ");
-        query.setParameter("name", name);
+
+    public User findByUsername(String username) {
+        Query query = connectionDB.getCurrentSession().createQuery("FROM User WHERE username = :username ");
+        query.setParameter("username", username);
         User user = null;
         try {
             user = (User) query.getSingleResult();

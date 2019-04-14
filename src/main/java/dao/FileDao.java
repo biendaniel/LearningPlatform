@@ -44,8 +44,4 @@ public class FileDao implements DaoInterface<File, Integer>{
 
     }
 
-    @Override
-    public File findByName(String name) {
-        return null;
-    }
 }

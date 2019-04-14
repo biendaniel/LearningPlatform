@@ -47,11 +47,6 @@ public class RoleDao implements DaoInterface<Role, Integer> {
     public void deleteAll() {
     }
 
-    @Override
-    public Role findByName(String name) {
-        return null;
-    }
-
 }
 
 

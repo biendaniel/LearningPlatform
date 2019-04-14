@@ -28,23 +28,18 @@ public class UserService {
         connectionDB.closeCurrentSessionwithTransaction();
     }
 
-    public User findById(Integer id) {
+
+
+    public User findByUsername(String username) {
         connectionDB.openCurrentSession();
-        User user = userDao.findById(id);
+        User user = userDao.findByUsername(username);
         connectionDB.closeCurrentSession();
         return user;
     }
 
-    public User findByName(String name) {
-        connectionDB.openCurrentSession();
-        User user = userDao.findByName(name);
-        connectionDB.closeCurrentSession();
-        return user;
-    }
-
-    public void delete(Integer id) {
+    public void delete(String username) {
         connectionDB.openCurrentSessionwithTransaction();
-        User user = userDao.findById(id);
+        User user = userDao.findByUsername(username);
         userDao.delete(user);
         connectionDB.closeCurrentSessionwithTransaction();
     }
