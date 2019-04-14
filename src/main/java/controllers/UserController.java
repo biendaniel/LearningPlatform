@@ -43,8 +43,8 @@ public class UserController {
 
     @Path("/{username}")
     @PATCH
-    public void editUser(@PathParam("username") String id, User user) {
-        User loadedUser = userService.findById(id);
+    public void editUser(@PathParam("username") String username, User user) {
+        User loadedUser = userService.findByUsername(username);
         if (user.getEmail() != null) {
             loadedUser.setEmail(user.getEmail());
         }
@@ -77,7 +77,7 @@ public class UserController {
     @GET
     @Path("/{username}")
     public User getUserByName(@PathParam("username") String username) {
-        User user = userService.findByName(username);
+        User user = userService.findByUsername(username);
         return user;
     }
 

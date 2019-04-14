@@ -42,8 +42,4 @@ public class CourseDao implements DaoInterface<Course, Integer>{
 
     }
 
-    @Override
-    public Course findByName(String name) {
-        return null;
-    }
 }

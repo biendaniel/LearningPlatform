@@ -18,15 +18,16 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+
     @ManyToOne
     private Subject subject;
-    @OneToMany()
+    @OneToMany(mappedBy="course")
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "chaptersID")
     private List<CourseChapter> chapters;
+
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "opinionID")
+//    @JoinColumn(name = "courseID")
     private List<Opinion> opinions;
 
     public Course() {

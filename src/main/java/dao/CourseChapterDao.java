@@ -43,8 +43,4 @@ public class CourseChapterDao implements DaoInterface<CourseChapter, Integer> {
 //TODO
     }
 
-    @Override
-    public CourseChapter findByName(String name) {
-        return null;
-    }
 }

@@ -46,8 +46,4 @@ public class LessonDateDao implements DaoInterface<LessonDate, Integer> {
 
     }
 
-    @Override
-    public LessonDate findByName(String name) {
-        return null;
-    }
 }

@@ -44,8 +44,4 @@ public class SubjectDao implements DaoInterface<Subject, Integer> {
 
     }
 
-    @Override
-    public Subject findByName(String name) {
-        return null;
-    }
 }

@@ -18,11 +18,11 @@ public class CourseChapter {
     @JoinColumn(name = "chapterID")
     private List<File> files;
 
-    public CourseChapter(String name, String content, List<File> files) {
-        this.name = name;
-        this.content = content;
-        this.files = files;
-    }
+    @ManyToOne
+//    @JoinColumn("courseID")
+    private Course course;
+
+
 
     public CourseChapter() {
     }
@@ -51,6 +51,13 @@ public class CourseChapter {
         this.content = content;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
     public List<File> getFiles() {
         return files;

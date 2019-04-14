@@ -45,8 +45,4 @@ public class OpinionDao implements DaoInterface<Opinion, Integer> {
 
     }
 
-    @Override
-    public Opinion findByName(String name) {
-        return null;
-    }
 }
