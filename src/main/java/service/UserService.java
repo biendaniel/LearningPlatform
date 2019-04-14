@@ -2,6 +2,7 @@ package service;
 
 import hibernate.ConnectionDB;
 import dao.UserDao;
+import model.Course;
 import model.User;
 
 import javax.enterprise.context.ApplicationScoped;

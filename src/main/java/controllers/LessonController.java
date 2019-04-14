@@ -22,7 +22,7 @@ public class LessonController {
         return lessons;
     }
 
-    @PUT
+    @POST
     public void addLesson(Lesson lesson) {
         lessonService.create(lesson);
     }

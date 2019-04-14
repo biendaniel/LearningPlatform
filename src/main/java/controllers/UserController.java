@@ -24,7 +24,7 @@ public class UserController {
         return Response.ok(theUser).build();
     }
 
-    @PUT
+    @POST
     @Path("/registration")
     public boolean registrationUser(User user) {
         if (userService.checkUniquenessUsername(user)) {
@@ -41,9 +41,9 @@ public class UserController {
     }
 
 
-    @Path("/{id}")
+    @Path("/{username}")
     @PATCH
-    public void editUser(@PathParam("id") Integer id, User user) {
+    public void editUser(@PathParam("username") String id, User user) {
         User loadedUser = userService.findById(id);
         if (user.getEmail() != null) {
             loadedUser.setEmail(user.getEmail());
@@ -67,24 +67,24 @@ public class UserController {
         userService.update(loadedUser);
     }
 
-    @GET
-    @Path("/{id}")
-    public User getUserById(@PathParam("id") Integer id) {
-        User user = userService.findById(id);
-        return user;
-    }
+//    @GET
+//    @Path("/id/{id}")
+//    public User getUserById(@PathParam("id") Integer id) {
+//        User user = userService.findById(id);
+//        return user;
+//    }
 
     @GET
-    @Path("/username")
-    public User getUserByName(User enteredUser) {
-        User user = userService.findByName(enteredUser.getUsername());
+    @Path("/{username}")
+    public User getUserByName(@PathParam("username") String username) {
+        User user = userService.findByName(username);
         return user;
     }
 
 
     @DELETE
-    @Path("/{id}")
-    public boolean deleteUser(@PathParam("id") Integer id) {
+    @Path("/{username}")
+    public boolean deleteUser(@PathParam("username") String id) {
         try {
             userService.delete(id);
         } catch (Exception e) {

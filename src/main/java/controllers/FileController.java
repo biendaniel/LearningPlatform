@@ -22,7 +22,7 @@ public class FileController {
         return files;
     }
 
-    @PUT
+    @POST
     public void addFile(File file) {
         fileService.create(file);
     }

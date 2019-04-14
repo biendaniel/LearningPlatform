@@ -22,7 +22,7 @@ public class LessonDateController {
         return lessonDates;
     }
 
-    @PUT
+    @POST
     public void addLessonDate(LessonDate lessonDate) {
         lessonDateService.create(lessonDate);
     }
