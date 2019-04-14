@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 public class Opinion {
 
-    //TODO - Tutaj stworzlem tylko pola - możliwe, że trzeba dodać jeszcze relacje
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -18,7 +18,7 @@ public class RoleController {
     @Inject
     RoleService roleService;
 
-    @PUT
+    @POST
     public void addRole(Role role) {
         roleService.create(role);
     }

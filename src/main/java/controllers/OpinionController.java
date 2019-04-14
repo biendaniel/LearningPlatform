@@ -24,7 +24,7 @@ public class OpinionController {
         return opinions;
     }
 
-    @PUT
+    @POST
     public void addOpinion(Opinion opinion) {
         opinionService.create(opinion);
     }

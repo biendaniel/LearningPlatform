@@ -24,7 +24,7 @@ public class CourseController {
         return courses;
     }
 
-    @PUT
+    @POST
     public void addCourse(Course course) {
         courseService.create(course);
     }

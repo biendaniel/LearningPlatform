@@ -21,11 +21,11 @@ public class User {
     private Role role;
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "courseID")
+    @JoinColumn(name = "userID")
     private List<Course> courses;
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "opinionID")
+    @JoinColumn(name = "userID")
     private List<Opinion> opinions;
     private boolean isPremium;
     private boolean isBlocked;

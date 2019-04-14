@@ -26,7 +26,7 @@ public class CourseChapterController {
         return courseChapters;
     }
 
-    @PUT
+    @POST
     public void addCourseChapter(CourseChapter courseChapter) {
         courseChapterService.create(courseChapter);
     }

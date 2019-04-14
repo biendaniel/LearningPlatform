@@ -22,7 +22,7 @@ public class SubjectController {
         return subjects;
     }
 
-    @PUT
+    @POST
     public void addSubject(Subject subject) {
         subjectService.create(subject);
     }
