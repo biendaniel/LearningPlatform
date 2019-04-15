@@ -10,7 +10,7 @@ public class CourseChapterDao extends DaoAbstract<CourseChapter, Integer> {
 
     public List<CourseChapter> findAll() {
         connectionDB.openCurrentSession();
-        List<CourseChapter> chapters = (List<CourseChapter>) connectionDB.getCurrentSession().createQuery("FROM CourseChapter");
+        List<CourseChapter> chapters = (List<CourseChapter>) connectionDB.getCurrentSession().createQuery("FROM CourseChapter").list();
         connectionDB.closeCurrentSession();
         return chapters;
     }
