@@ -1,9 +1,8 @@
 package controllers;
 
+import dao.CourseDao;
 import model.Course;
-import service.CourseService;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,53 +12,55 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CourseController {
-
     @Inject
-    CourseService courseService;
+    CourseDao course;
+
     @GET
     public List<Course> getCourseList() {
-        Course course = courseService.findById(1);
-        System.out.println(course);
-        List<Course> courses = courseService.findAll();
-        return courses;
+        return course.findAll();
     }
 
     @POST
-    public void addCourse(Course course) {
-        courseService.create(course);
+    public void addCourse(Course newCourse) {
+        course.create(newCourse);
     }
 
 
     @GET
     @Path("/{id}")
     public Course getCourseById(@PathParam("id") Integer id) {
-        Course course = courseService.findById(id);
-        return course;
+        return course.findById(id);
     }
 
     @PATCH
     @Path("/{id}")
-    public void editCourse(@PathParam("id") Integer id, Course course) {
-        Course loadedCourse = courseService.findById(id);
-        if(course.getName() != null) {
-            loadedCourse.setName(course.getName());
+    public void editCourse(@PathParam("id") Integer id, Course forwardedCourse) {
+        Course loadedCourse = course.findById(id);
+        if (forwardedCourse.getName() != null) {
+            loadedCourse.setName(forwardedCourse.getName());
         }
-        if(course.getSubject() != null) {
-            loadedCourse.setSubject(course.getSubject());
+        if (forwardedCourse.getSubject() != null) {
+            loadedCourse.setSubject(forwardedCourse.getSubject());
         }
-        if(course.getChapters() != null) {
-            loadedCourse.setChapters(course.getChapters());
+        if (forwardedCourse.getChapters() != null) {
+            loadedCourse.setChapters(forwardedCourse.getChapters());
         }
-        if(course.getOpinions() != null) {
-            loadedCourse.setOpinions(course.getOpinions());
+        if (forwardedCourse.getOpinions() != null) {
+            loadedCourse.setOpinions(forwardedCourse.getOpinions());
         }
-        courseService.update(loadedCourse);
+        course.update(loadedCourse);
     }
 
     @DELETE
     @Path("/{id}")
     public void deleteFile(@PathParam("id") Integer id) {
-        Course loadedCourse = courseService.findById(id);
-        courseService.delete(loadedCourse);
+        Course loadedCourse = course.findById(id);
+        course.delete(loadedCourse);
+    }
+
+    @GET
+    @Path("/{id}/owner")
+    public String getCourseOwnerUsername(@PathParam("id") Integer id) {
+        return course.findCourseOwner(id);
     }
 }

@@ -2,7 +2,6 @@ package model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class CourseChapter {
@@ -14,7 +13,7 @@ public class CourseChapter {
     private String name;
     private String content;
 
-    @OneToMany(fetch = FetchType.EAGER )
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "chapterID")
     private List<File> files;
 

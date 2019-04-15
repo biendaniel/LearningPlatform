@@ -1,7 +1,7 @@
 package controllers;
 
+import dao.FileDao;
 import model.File;
-import service.FileService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,43 +14,43 @@ import java.util.List;
 public class FileController {
 
     @Inject
-    FileService fileService;
+    FileDao file;
 
     @GET
     public List<File> getFileList() {
-        List<File> files = fileService.findAll();
+        List<File> files = file.findAll();
         return files;
     }
 
     @POST
-    public void addFile(File file) {
-        fileService.create(file);
+    public void addFile(File forwardedFile) {
+        file.create(forwardedFile);
     }
 
     @GET
     @Path("/{id}")
     public File getFileById(@PathParam("id") Integer id) {
-        File file = fileService.findById(id);
-        return file;
+        File loadedFile = file.findById(id);
+        return loadedFile;
     }
 
     @PATCH
     @Path("/{id}")
-    public void editFile(@PathParam("id") Integer id, File file) {
-        File loadedFile = fileService.findById(id);
-        if(file.getName() != null) {
-            loadedFile.setName(file.getName());
+    public void editFile(@PathParam("id") Integer id, File forwardedFile) {
+        File loadedFile = file.findById(id);
+        if (forwardedFile.getName() != null) {
+            loadedFile.setName(forwardedFile.getName());
         }
-        if(file.getUrl() != null) {
-            loadedFile.setUrl(file.getUrl());
+        if (forwardedFile.getUrl() != null) {
+            loadedFile.setUrl(forwardedFile.getUrl());
         }
-        fileService.update(loadedFile);
+        file.update(loadedFile);
     }
 
     @DELETE
     @Path("/{id}")
     public void deleteFile(@PathParam("id") Integer id) {
-        File loadedFile = fileService.findById(id);
-        fileService.delete(loadedFile);
+        File loadedFile = file.findById(id);
+        file.delete(loadedFile);
     }
 }

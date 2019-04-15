@@ -1,10 +1,8 @@
 package controllers;
 
+import dao.CourseChapterDao;
 import model.CourseChapter;
-import model.File;
-import service.CourseChapterService;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -16,49 +14,45 @@ import java.util.List;
 public class CourseChapterController {
 
     @Inject
-    CourseChapterService courseChapterService;
+    CourseChapterDao chapter;
 
     @GET
     public List<CourseChapter> getCourseChapterList() {
-        CourseChapter courseChapter = courseChapterService.findById(1);
-        System.out.println(courseChapter);
-        List<CourseChapter> courseChapters = courseChapterService.findAll();
-        return courseChapters;
+        return chapter.findAll();
     }
 
     @POST
-    public void addCourseChapter(CourseChapter courseChapter) {
-        courseChapterService.create(courseChapter);
+    public void addCourseChapter(CourseChapter forwardedChapter) {
+        chapter.create(forwardedChapter);
     }
 
 
     @GET
     @Path("/{id}")
     public CourseChapter getCourseChapterById(@PathParam("id") Integer id) {
-        CourseChapter courseChapter = courseChapterService.findById(id);
-        return courseChapter;
+        return chapter.findById(id);
     }
 
     @PATCH
     @Path("/{id}")
-    public void editCourseChapter(@PathParam("id") Integer id, CourseChapter courseChapter) {
-        CourseChapter loadedCourseChapter = courseChapterService.findById(id);
-        if(courseChapter.getName() != null) {
-            loadedCourseChapter.setName(courseChapter.getName());
+    public void editCourseChapter(@PathParam("id") Integer id, CourseChapter forwardedChapter) {
+        CourseChapter loadedCourseChapter = chapter.findById(id);
+        if (forwardedChapter.getName() != null) {
+            loadedCourseChapter.setName(forwardedChapter.getName());
         }
-        if(courseChapter.getContent() != null) {
-            loadedCourseChapter.setContent(courseChapter.getContent());
+        if (forwardedChapter.getContent() != null) {
+            loadedCourseChapter.setContent(forwardedChapter.getContent());
         }
-        if(courseChapter.getFiles() != null) {
-            loadedCourseChapter.setFiles(courseChapter.getFiles());
+        if (forwardedChapter.getFiles() != null) {
+            loadedCourseChapter.setFiles(forwardedChapter.getFiles());
         }
-        courseChapterService.update(loadedCourseChapter);
+        chapter.update(loadedCourseChapter);
     }
 
     @DELETE
     @Path("/{id}")
     public void deleteFile(@PathParam("id") Integer id) {
-        CourseChapter loadedCourseChapter = courseChapterService.findById(id);
-        courseChapterService.delete(loadedCourseChapter);
+        CourseChapter loadedCourseChapter = chapter.findById(id);
+        chapter.delete(loadedCourseChapter);
     }
 }
