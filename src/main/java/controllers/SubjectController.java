@@ -1,11 +1,11 @@
 package controllers;
+
+import dao.SubjectDao;
 import model.Subject;
-import service.SubjectService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/subjects")
@@ -14,40 +14,40 @@ import java.util.List;
 public class SubjectController {
 
     @Inject
-    SubjectService subjectService;
+    SubjectDao subject;
 
     @GET
     public List<Subject> getSubjectList() {
-        List<Subject> subjects = subjectService.findAll();
+        List<Subject> subjects = subject.findAll();
         return subjects;
     }
 
     @POST
-    public void addSubject(Subject subject) {
-        subjectService.create(subject);
+    public void addSubject(Subject forwardedSubject) {
+        subject.create(forwardedSubject);
     }
 
     @GET
     @Path("/{id}")
     public Subject getSubjectById(@PathParam("id") Integer id) {
-        Subject subject = subjectService.findById(id);
-        return subject;
+        return subject.findById(id);
     }
 
     @DELETE
     @Path("/{id}")
     public void removeSubject(@PathParam("id") Integer id) {
-        Subject subject = subjectService.findById(id);
-        subjectService.delete(subject);
+        Subject loadedSubject = subject.findById(id);
+        subject.delete(loadedSubject);
     }
+
     @PATCH
     @Path("/{id}")
-    public void updateSubject(@PathParam("id") Integer id, Subject subject) {
+    public void updateSubject(@PathParam("id") Integer id, Subject forwardedSubject) {
 
-        if(subject.getName() != null) {
-            Subject loadedSubject = subjectService.findById(id);
-            loadedSubject.setName(subject.getName());
-            subjectService.update(loadedSubject);
+        if (forwardedSubject.getName() != null) {
+            Subject loadedSubject = subject.findById(id);
+            loadedSubject.setName(forwardedSubject.getName());
+            subject.update(loadedSubject);
         }
     }
 }

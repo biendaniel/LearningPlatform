@@ -1,10 +1,9 @@
 package model;
 
-import service.FileService;
-
-import javax.inject.Inject;
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class File {
@@ -15,6 +14,7 @@ public class File {
     private Integer id;
     private String name;
     private String url;
+
     public File() {
     }
 
@@ -41,7 +41,6 @@ public class File {
     public void setUrl(String url) {
         this.url = url;
     }
-
 
 
     @Override

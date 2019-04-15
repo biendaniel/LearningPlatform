@@ -1,7 +1,7 @@
 package controllers;
 
+import dao.LessonDao;
 import model.Lesson;
-import service.LessonService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,44 +14,44 @@ import java.util.List;
 public class LessonController {
 
     @Inject
-    LessonService lessonService;
+    LessonDao lesson;
 
     @GET
     public List<Lesson> getLessonList() {
-        List<Lesson> lessons = lessonService.findAll();
+        List<Lesson> lessons = lesson.findAll();
         return lessons;
     }
 
     @POST
-    public void addLesson(Lesson lesson) {
-        lessonService.create(lesson);
+    public void addLesson(Lesson forwardedLesson) {
+        lesson.create(forwardedLesson);
     }
 
     @GET
     @Path("/{id}")
     public Lesson getLessonById(@PathParam("id") Integer id) {
-        Lesson lesson = lessonService.findById(id);
-        return lesson;
+        Lesson loadedLesson = lesson.findById(id);
+        return loadedLesson;
     }
 
 
     @PATCH
     @Path("/{id}")
-    public void editLesson(@PathParam("id") Integer id, Lesson lesson) {
-        Lesson loadedLesson = lessonService.findById(id);
-        if(lesson.getName() != null) {
-            loadedLesson.setName(lesson.getName());
+    public void editLesson(@PathParam("id") Integer id, Lesson forwardedLesson) {
+        Lesson loadedLesson = lesson.findById(id);
+        if (forwardedLesson.getName() != null) {
+            loadedLesson.setName(forwardedLesson.getName());
         }
-        if(lesson.getCost() != null) {
-            loadedLesson.setCost(lesson.getCost());
+        if (forwardedLesson.getCost() != null) {
+            loadedLesson.setCost(forwardedLesson.getCost());
         }
-        lessonService.update(loadedLesson);
+        lesson.update(loadedLesson);
     }
 
     @DELETE
     @Path("/{id}")
     public void deleteLesson(@PathParam("id") Integer id) {
-        Lesson loadedLesson = lessonService.findById(id);
-        lessonService.delete(loadedLesson);
+        Lesson loadedLesson = lesson.findById(id);
+        lesson.delete(loadedLesson);
     }
 }

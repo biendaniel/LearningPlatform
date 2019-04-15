@@ -1,45 +1,30 @@
 package dao;
 
-import hibernate.ConnectionDB;
 import model.Course;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import javax.persistence.Query;
 import java.util.List;
 
 @ApplicationScoped
-public class CourseDao implements DaoInterface<Course, Integer>{
+public class CourseDao extends DaoAbstract<Course, Integer> {
 
-    @Inject
-    ConnectionDB connectionDB;
-    @Override
-    public Integer create(Course entity) {
-        return (Integer) connectionDB.getCurrentSession().save(entity);
+    public Course findById(Integer id) {
+        connectionDB.openCurrentSession();
+        Course course = connectionDB.getCurrentSession().get(Course.class, id);
+        connectionDB.closeCurrentSession();
+        return course;
     }
 
-    @Override
-    public void update(Course entity) {
-        connectionDB.getCurrentSession().update(entity);
-    }
-
-    @Override
-    public Course findById(Integer integer) {
-        return connectionDB.getCurrentSession().get(Course.class, integer);
-    }
-
-    @Override
-    public void delete(Course entity) {
-        connectionDB.getCurrentSession().delete(entity);
-    }
-
-    @Override
     public List<Course> findAll() {
-        return connectionDB.getCurrentSession().createQuery("FROM Course ").list();
+        connectionDB.openCurrentSession();
+        List<Course> courses = (List<Course>) connectionDB.getCurrentSession().createQuery("FROM Course");
+        connectionDB.closeCurrentSession();
+        return courses;
     }
 
-    @Override
-    public void deleteAll() {
-
+    public String findCourseOwner(Integer id) {
+        Query query = connectionDB.getCurrentSession().createNativeQuery("SELECT username FROM User u, Course c WHERE c.id = :id AND c.userID = u.id");
+        return (String) query.setParameter("id", id).getSingleResult();
     }
-
 }

@@ -1,7 +1,7 @@
 package controllers;
 
+import dao.OpinionDao;
 import model.Opinion;
-import service.OpinionService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,50 +14,48 @@ import java.util.List;
 public class OpinionController {
 
     @Inject
-    OpinionService opinionService;
+    OpinionDao opinion;
 
     @GET
     public List<Opinion> getOpinionList() {
-        Opinion opinion = opinionService.findById(1);
-        System.out.println(opinion);
-        List<Opinion> opinions = opinionService.findAll();
+        List<Opinion> opinions = opinion.findAll();
         return opinions;
     }
 
     @POST
-    public void addOpinion(Opinion opinion) {
-        opinionService.create(opinion);
+    public void addOpinion(Opinion forwardedOpinion) {
+        opinion.create(forwardedOpinion);
     }
 
 
     @GET
     @Path("/{id}")
     public Opinion getOpinionById(@PathParam("id") Integer id) {
-        Opinion opinion = opinionService.findById(id);
-        return opinion;
+        Opinion loadedOpinion = opinion.findById(id);
+        return loadedOpinion;
     }
 
     @PATCH
     @Path("/{id}")
-    public void editOpinion(@PathParam("id") Integer id, Opinion opinion) {
-        Opinion loadedOpinion = opinionService.findById(id);
-        if(opinion.getContent() != null) {
-            loadedOpinion.setContent(opinion.getContent());
+    public void editOpinion(@PathParam("id") Integer id, Opinion forwardedOpinion) {
+        Opinion loadedOpinion = opinion.findById(id);
+        if (forwardedOpinion.getContent() != null) {
+            loadedOpinion.setContent(forwardedOpinion.getContent());
         }
-        if(opinion.getValue() != null) {
-            loadedOpinion.setValue(opinion.getValue());
+        if (forwardedOpinion.getValue() != null) {
+            loadedOpinion.setValue(forwardedOpinion.getValue());
         }
-        if(opinion.getRaterUser() != null) {
-            loadedOpinion.setRaterUser(opinion.getRaterUser());
+        if (forwardedOpinion.getRaterUser() != null) {
+            loadedOpinion.setRaterUser(forwardedOpinion.getRaterUser());
         }
-        opinionService.update(loadedOpinion);
+        opinion.update(loadedOpinion);
     }
 
     @DELETE
     @Path("/{id}")
-    public void deleteFile(@PathParam("id") Integer id) {
-        Opinion loadedOpinion = opinionService.findById(id);
-        opinionService.delete(loadedOpinion);
+    public void deleteOpinion(@PathParam("id") Integer id) {
+        Opinion loadedOpinion = opinion.findById(id);
+        opinion.delete(loadedOpinion);
     }
 }
 

@@ -15,7 +15,8 @@ public class Role {
     private Integer id;
     private String name;
 
-    public Role(String name) {
+    public Role(String name, Integer id) {
+        this.id = id;
         this.name = name;
     }
 

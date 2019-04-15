@@ -1,7 +1,7 @@
 package controllers;
 
+import dao.LessonDateDao;
 import model.LessonDate;
-import service.LessonDateService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,37 +14,37 @@ import java.util.List;
 public class LessonDateController {
 
     @Inject
-    LessonDateService lessonDateService;
+    LessonDateDao lessonDate;
 
     @GET
     public List<LessonDate> getLessonDateList() {
-        List<LessonDate> lessonDates = lessonDateService.findAll();
+        List<LessonDate> lessonDates = lessonDate.findAll();
         return lessonDates;
     }
 
     @POST
-    public void addLessonDate(LessonDate lessonDate) {
-        lessonDateService.create(lessonDate);
+    public void addLessonDate(LessonDate forwardedLessonDate) {
+        lessonDate.create(forwardedLessonDate);
     }
 
     @GET
     @Path("/{id}")
     public LessonDate getLessonDateById(@PathParam("id") Integer id) {
-        LessonDate lessonDate = lessonDateService.findById(id);
-        return lessonDate;
+        LessonDate loadedLessonDate = lessonDate.findById(id);
+        return loadedLessonDate;
     }
 
 
-    /////Wydaje mi się, że update tutaj nie będzie potrzebny
+    ///Wydaje mi się, że update tutaj nie będzie potrzebny //TODO dodać PATCH
 //    @PATCH
 //    @Path("/{id}")
-//    public void editLessonDate(@PathParam("id") Integer id, LessonDate lessonDate) {
-//        LessonDate loadedLessonDate = lessonDateService.findById(id);
-//        if(lessonDate.getC() != null) {
-//            loadedLessonDate.setName(lessonDate.getName());
+//    public void editLessonDate(@PathParam("id") Integer id, LessonDate forwardedLessonDate) {
+//        LessonDate loadedLessonDate = lessonDate.findById(id);
+//        if(forwardedLessonDate.getC() != null) {
+//            loadedLessonDate.setName(forwardedLessonDate.getName());
 //        }
-//        if(lessonDate.getUrl() != null) {
-//            loadedLessonDate.setUrl(lessonDate.getUrl());
+//        if(forwardedLessonDate.getUrl() != null) {
+//            loadedLessonDate.setUrl(forwardedLessonDate.getUrl());
 //        }
 //        lessonDateService.update(loadedLessonDate);
 //    }
@@ -52,7 +52,7 @@ public class LessonDateController {
     @DELETE
     @Path("/{id}")
     public void deleteLessonDate(@PathParam("id") Integer id) {
-        LessonDate loadedLessonDate = lessonDateService.findById(id);
-        lessonDateService.delete(loadedLessonDate);
+        LessonDate loadedLessonDate = lessonDate.findById(id);
+        lessonDate.delete(loadedLessonDate);
     }
 }

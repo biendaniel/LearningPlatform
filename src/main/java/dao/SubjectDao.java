@@ -1,47 +1,25 @@
 package dao;
 
-import hibernate.ConnectionDB;
 import model.Subject;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
-public class SubjectDao implements DaoInterface<Subject, Integer> {
+public class SubjectDao extends DaoAbstract<Subject, Integer> {
 
-    @Inject
-    private ConnectionDB connectionDB;
-
-    @Override
-    public Integer create(Subject entity) {
-        return (Integer) connectionDB.getCurrentSession().save(entity);
+    public Subject findById(Integer id) {
+        connectionDB.openCurrentSession();
+        Subject subject = connectionDB.getCurrentSession().get(Subject.class, id);
+        connectionDB.closeCurrentSession();
+        return subject;
     }
 
-    @Override
-    public void update(Subject entity) {
-        connectionDB.getCurrentSession().update(entity);
-    }
-
-    @Override
-    public Subject findById(Integer integer) {
-        return connectionDB.getCurrentSession().get(Subject.class, integer);
-    }
-
-    @Override
-    public void delete(Subject entity) {
-        connectionDB.getCurrentSession().delete(entity);
-
-    }
-
-    @Override
     public List<Subject> findAll() {
-        return connectionDB.getCurrentSession().createQuery("FROM Subject").list();
-    }
-
-    @Override
-    public void deleteAll() {
-
+        connectionDB.openCurrentSession();
+        List<Subject> subjects = (List<Subject>) connectionDB.getCurrentSession().createQuery("FROM Subject");
+        connectionDB.closeCurrentSession();
+        return subjects;
     }
 
 }
