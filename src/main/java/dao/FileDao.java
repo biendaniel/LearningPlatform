@@ -14,7 +14,7 @@ public class FileDao extends DaoAbstract<File, Integer> {
 
     public List<File> findAll() {
         connectionDB.openCurrentSession();
-        List<File> files = (List<File>) connectionDB.getCurrentSession().createQuery("FROM File");
+        List<File> files = (List<File>) connectionDB.getCurrentSession().createQuery("FROM File").list();
         connectionDB.closeCurrentSession();
         return files;
     }
