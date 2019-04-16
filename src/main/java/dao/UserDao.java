@@ -18,38 +18,44 @@ public class UserDao extends DaoAbstract<User, Integer> {
     }
 
     public User findUserByUsernameAndPassword(String username, String password) {
+        connectionDB.openCurrentSession();
         Query query = connectionDB.getCurrentSession().createQuery("FROM User WHERE username = :username AND password = :password ");
         query.setParameter("username", username);
         query.setParameter("password", password);
+        return getUserFromQuery(query);
+    }
+
+    private User getUserFromQuery(Query query) {
         User user = null;
         try {
             user = (User) query.getSingleResult();
+            connectionDB.closeCurrentSession();
             return user;
         } catch (Exception e) {
+            connectionDB.closeCurrentSession();
             return user;
         }
     }
-
 
     public User findByUsername(String username) {
+        connectionDB.openCurrentSession();
         Query query = connectionDB.getCurrentSession().createQuery("FROM User WHERE username = :username ");
         query.setParameter("username", username);
-        User user = null;
-        try {
-            user = (User) query.getSingleResult();
-            return user;
-        } catch (Exception e) {
-            return user;
-        }
+        return getUserFromQuery(query);
     }
 
+
+
     public boolean checkUniquenessUsername(User user) {
+        connectionDB.openCurrentSession();
         List<User> users = findAll();
         for (User it : users) {
             if (it.getUsername().equalsIgnoreCase(user.getUsername())) {
+                connectionDB.closeCurrentSession();
                 return false;
             }
         }
+        connectionDB.closeCurrentSession();
         return true;
     }
 

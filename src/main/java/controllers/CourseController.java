@@ -43,10 +43,10 @@ public class CourseController {
             loadedCourse.setSubject(forwardedCourse.getSubject());
         }
         if (forwardedCourse.getChapters() != null) {
-            loadedCourse.setChapters(forwardedCourse.getChapters());
+            loadedCourse.getChapters().add(forwardedCourse.getChapters().stream().findFirst().get());
         }
         if (forwardedCourse.getOpinions() != null) {
-            loadedCourse.setOpinions(forwardedCourse.getOpinions());
+            loadedCourse.getOpinions().add(forwardedCourse.getOpinions().stream().findFirst().get());
         }
         course.update(loadedCourse);
     }
