@@ -1,11 +1,15 @@
 package controllers;
 
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
 import dao.FileDao;
 import model.File;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.InputStream;
 import java.util.List;
 
 @Path("/files")
@@ -53,4 +57,16 @@ public class FileController {
         File loadedFile = file.findById(id);
         file.delete(loadedFile);
     }
+
+    @POST
+    @Path("/img")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(@FormDataParam("file") InputStream uploadedStream,
+                               @FormDataParam("file") FormDataContentDisposition fileDetail) {
+        String fileName = fileDetail.getFileName();
+//        saveToFile(uploadedStream,fileName);
+        String output = "File saved to server location : " + fileName;
+        return Response.status(200).entity(output).build();
+    }
+
 }
