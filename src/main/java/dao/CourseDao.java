@@ -24,7 +24,10 @@ public class CourseDao extends DaoAbstract<Course, Integer> {
     }
 
     public String findCourseOwner(Integer id) {
+        connectionDB.openCurrentSession();
         Query query = connectionDB.getCurrentSession().createNativeQuery("SELECT username FROM User u, Course c WHERE c.id = :id AND c.userID = u.id");
-        return (String) query.setParameter("id", id).getSingleResult();
+        String username =(String) query.setParameter("id", id).getSingleResult();
+        connectionDB.closeCurrentSession();
+        return username;
     }
 }

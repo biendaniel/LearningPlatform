@@ -56,10 +56,10 @@ public class UserController {
             loadedUser.setPremium(true);
         }
         if (forwardedUser.getOpinions() != null) {
-            loadedUser.setOpinions(forwardedUser.getOpinions());
+            loadedUser.getOpinions().add(forwardedUser.getOpinions().stream().findFirst().get());
         }
         if (forwardedUser.getCourses() != null) {
-            loadedUser.setCourses(forwardedUser.getCourses());
+            loadedUser.getCourses().add(forwardedUser.getCourses().stream().findFirst().get());
         }
 
         user.update(loadedUser);

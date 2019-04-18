@@ -17,7 +17,7 @@ public class LessonDao extends DaoAbstract<Lesson, Integer> {
 
     public List<Lesson> findAll() {
         connectionDB.openCurrentSession();
-        List<Lesson> lessons = (List<Lesson>) connectionDB.getCurrentSession().createQuery("FROM Lesson");
+        List<Lesson> lessons = (List<Lesson>) connectionDB.getCurrentSession().createQuery("FROM Lesson").list();
         connectionDB.closeCurrentSession();
         return lessons;
     }

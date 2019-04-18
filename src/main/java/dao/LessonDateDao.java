@@ -17,7 +17,7 @@ public class LessonDateDao extends DaoAbstract<LessonDate, Integer> {
 
     public List<LessonDate> findAll() {
         connectionDB.openCurrentSession();
-        List<LessonDate> lessonDates = (List<LessonDate>) connectionDB.getCurrentSession().createQuery("FROM LessonDate");
+        List<LessonDate> lessonDates = (List<LessonDate>) connectionDB.getCurrentSession().createQuery("FROM LessonDate").list();
         connectionDB.closeCurrentSession();
         return lessonDates;
     }

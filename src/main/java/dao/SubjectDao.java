@@ -17,7 +17,7 @@ public class SubjectDao extends DaoAbstract<Subject, Integer> {
 
     public List<Subject> findAll() {
         connectionDB.openCurrentSession();
-        List<Subject> subjects = (List<Subject>) connectionDB.getCurrentSession().createQuery("FROM Subject");
+        List<Subject> subjects = (List<Subject>) connectionDB.getCurrentSession().createQuery("FROM Subject").list();
         connectionDB.closeCurrentSession();
         return subjects;
     }

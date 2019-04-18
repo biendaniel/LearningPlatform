@@ -44,7 +44,7 @@ public class CourseChapterController {
             loadedCourseChapter.setContent(forwardedChapter.getContent());
         }
         if (forwardedChapter.getFiles() != null) {
-            loadedCourseChapter.setFiles(forwardedChapter.getFiles());
+            loadedCourseChapter.getFiles().add(forwardedChapter.getFiles().stream().findFirst().get());
         }
         chapter.update(loadedCourseChapter);
     }
