@@ -1,6 +1,7 @@
 package dao;
 
 
+import model.Course;
 import model.User;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -57,6 +58,12 @@ public class UserDao extends DaoAbstract<User, Integer> {
         }
         connectionDB.closeCurrentSession();
         return true;
+    }
+
+    public void updateUserCourses(String username, Course newCourse) {
+        User loadedUser = findByUsername(username);
+        loadedUser.getCourses().add(newCourse);
+        update(loadedUser);
     }
 
 

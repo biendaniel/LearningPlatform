@@ -1,6 +1,8 @@
 package controllers;
 
+import dao.CourseDao;
 import dao.UserDao;
+import model.Course;
 import model.User;
 
 import javax.inject.Inject;
@@ -15,6 +17,9 @@ import java.util.List;
 public class UserController {
     @Inject
     private UserDao user;
+
+    @Inject
+    private CourseDao course;
 
     @PUT
     @Path("/authorization")
@@ -38,6 +43,12 @@ public class UserController {
         return Response.ok(users).build();
     }
 
+    @POST
+    @Path("/{id}/addCourse")
+    public void addCourse(@PathParam("id") String username, Course newCourse) {
+        course.create(newCourse);
+        user.updateUserCourses(username,newCourse);
+    }
 
     @Path("/{username}")
     @PATCH

@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.CourseDao;
+import dao.UserDao;
 import model.Course;
 
 import javax.inject.Inject;
@@ -14,16 +15,15 @@ import java.util.List;
 public class CourseController {
     @Inject
     CourseDao course;
+    @Inject
+    UserDao user;
 
     @GET
     public List<Course> getCourseList() {
         return course.findAll();
     }
 
-    @POST
-    public void addCourse(Course newCourse) {
-        course.create(newCourse);
-    }
+
 
 
     @GET
