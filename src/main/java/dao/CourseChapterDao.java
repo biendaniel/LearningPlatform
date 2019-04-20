@@ -16,6 +16,9 @@ public class CourseChapterDao extends DaoAbstract<CourseChapter, Integer> {
     }
 
     public CourseChapter findById(Integer id) {
-        return connectionDB.getCurrentSession().get(CourseChapter.class, id);
+        connectionDB.openCurrentSession();
+        CourseChapter chapter = connectionDB.getCurrentSession().get(CourseChapter.class, id);
+        connectionDB.closeCurrentSession();
+        return chapter;
     }
 }

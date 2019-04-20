@@ -15,20 +15,19 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private String description;
     @ManyToOne
     private Subject subject;
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "chaptersID")
+    @JoinColumn(name = "courseID")
     private List<CourseChapter> chapters;
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "opinionID")
     private List<Opinion> opinions;
 
-    public Course() {
-
-    }
+    public Course() { }
 
     public List<CourseChapter> getChapters() {
         return chapters;
@@ -70,12 +69,18 @@ public class Course {
         this.opinions = opinions;
     }
 
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
+
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", subject=" + subject +
+                ", description=" + description +
                 '}';
     }
 }

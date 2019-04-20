@@ -15,7 +15,7 @@ public class File {
     private String name;
     private String url;
 
-    public File() {
+    public File(String fileLocation) {
     }
 
     public Integer getId() {
