@@ -1,8 +1,10 @@
 package controllers;
 
+import dao.CourseChapterDao;
 import dao.CourseDao;
 import dao.UserDao;
 import model.Course;
+import model.CourseChapter;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -17,13 +19,13 @@ public class CourseController {
     CourseDao course;
     @Inject
     UserDao user;
+    @Inject
+    CourseChapterDao chapter;
 
     @GET
     public List<Course> getCourseList() {
         return course.findAll();
     }
-
-
 
 
     @GET
@@ -62,5 +64,13 @@ public class CourseController {
     @Path("/{id}/owner")
     public String getCourseOwnerUsername(@PathParam("id") Integer id) {
         return course.findCourseOwner(id);
+    }
+
+
+    @POST
+    @Path("/{id}/addChapter")
+    public void addChapter(@PathParam("id") Integer id, CourseChapter forwardedChapter) {
+        chapter.create(forwardedChapter);
+        course.updateCourseChapters(id, forwardedChapter);
     }
 }
