@@ -6,7 +6,9 @@ import dao.FileDao;
 import model.File;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
@@ -58,15 +60,24 @@ public class FileController {
         file.delete(loadedFile);
     }
 
-    @POST
-    @Path("/img")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(@FormDataParam("file") InputStream uploadedStream,
-                               @FormDataParam("file") FormDataContentDisposition fileDetail) {
-        String fileName = fileDetail.getFileName();
-//        saveToFile(uploadedStream,fileName);
-        String output = "File saved to server location : " + fileName;
-        return Response.status(200).entity(output).build();
-    }
+
+//    @POST
+//    @Path("/img")
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    public void addFile(@Context HttpServletRequest request) {
+//        request.get
+//
+//    }
+//    public void addFile(File forwardedFile)
+//    @POST
+//    @Path("/img")
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    public Response uploadFile(@FormDataParam("file") InputStream uploadedStream,
+//                               @FormDataParam("file") FormDataContentDisposition fileDetail) {
+//        String fileName = fileDetail.getFileName();
+////        saveToFile(uploadedStream,fileName);
+//        String output = "File saved to server location : " + fileName;
+//        return Response.status(200).entity(output).build();
+//    }
 
 }

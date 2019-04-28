@@ -1,6 +1,8 @@
 package dao;
 
+import model.Course;
 import model.CourseChapter;
+import model.File;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
@@ -17,8 +19,16 @@ public class CourseChapterDao extends DaoAbstract<CourseChapter, Integer> {
 
     public CourseChapter findById(Integer id) {
         connectionDB.openCurrentSession();
-        CourseChapter chapter = connectionDB.getCurrentSession().get(CourseChapter.class, id);
+        CourseChapter courseChapter = connectionDB.getCurrentSession().get(CourseChapter.class, id);
         connectionDB.closeCurrentSession();
-        return chapter;
+        return courseChapter;
+
     }
+
+    public void updateChapterFiles(Integer id, File file) {
+        CourseChapter loadedChapter = findById(id);
+        loadedChapter.getFiles().add(file);
+        update(loadedChapter);
+    }
+
 }

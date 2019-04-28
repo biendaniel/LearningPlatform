@@ -1,6 +1,7 @@
 package dao;
 
 import model.Course;
+import model.CourseChapter;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.Query;
@@ -29,5 +30,11 @@ public class CourseDao extends DaoAbstract<Course, Integer> {
         String username =(String) query.setParameter("id", id).getSingleResult();
         connectionDB.closeCurrentSession();
         return username;
+    }
+
+    public void updateCourseChapters(Integer id, CourseChapter chapter) {
+        Course loadedCourse = findById(id);
+        loadedCourse.getChapters().add(chapter);
+        update(loadedCourse);
     }
 }

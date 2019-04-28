@@ -1,7 +1,9 @@
 package controllers;
 
 import dao.CourseChapterDao;
+import dao.FileDao;
 import model.CourseChapter;
+import model.File;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -15,6 +17,8 @@ public class CourseChapterController {
 
     @Inject
     CourseChapterDao chapter;
+    @Inject
+    FileDao file;
 
     @GET
     public List<CourseChapter> getCourseChapterList() {
@@ -54,5 +58,12 @@ public class CourseChapterController {
     public void deleteFile(@PathParam("id") Integer id) {
         CourseChapter loadedCourseChapter = chapter.findById(id);
         chapter.delete(loadedCourseChapter);
+    }
+
+    @POST
+    @Path("/{id}/addFile")
+    public void addFile(@PathParam("id") Integer id, File forwardedFile) {
+        file.create(forwardedFile);
+        chapter.updateChapterFiles(id, forwardedFile);
     }
 }
