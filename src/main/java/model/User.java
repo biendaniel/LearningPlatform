@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class User {
@@ -27,6 +28,11 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "userID")
     private List<Opinion> opinions;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany
+    private List<Course> studentCourses;
+
     private boolean isPremium;
     private boolean isBlocked;
     private boolean isVerified;
@@ -130,6 +136,15 @@ public class User {
         this.courses = courses;
     }
 
+
+    public List<Course> getStudentCourses() {
+        return studentCourses;
+    }
+
+    public void setStudentCourses(List<Course> studentCourses) {
+        this.studentCourses = studentCourses;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -143,5 +158,30 @@ public class User {
                 ", isPremium=" + isPremium +
                 ", isBlocked=" + isBlocked +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return isPremium == user.isPremium &&
+                isBlocked == user.isBlocked &&
+                isVerified == user.isVerified &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(role, user.role) &&
+                Objects.equals(courses, user.courses) &&
+                Objects.equals(opinions, user.opinions) &&
+                Objects.equals(studentCourses, user.studentCourses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, firstName, lastName, email, role, courses, opinions, studentCourses, isPremium, isBlocked, isVerified);
     }
 }

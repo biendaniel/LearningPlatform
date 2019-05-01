@@ -50,6 +50,12 @@ public class UserController {
         user.updateUserCourses(username,newCourse);
     }
 
+    @PATCH
+    @Path("/{id}/joinCourse")
+    public void joinCourse(@PathParam("id") String username, Course course) {
+        user.updateStudentCourses(username,course);
+    }
+
     @Path("/{username}")
     @PATCH
     public void editUser(@PathParam("username") String username, User forwardedUser) {

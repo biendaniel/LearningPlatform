@@ -5,11 +5,15 @@ import model.Course;
 import model.User;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.Query;
 import java.util.List;
 
 @ApplicationScoped
 public class UserDao extends DaoAbstract<User, Integer> {
+
+    @Inject
+    CourseDao course;
 
     public List<User> findAll() {
         connectionDB.openCurrentSession();
@@ -63,6 +67,13 @@ public class UserDao extends DaoAbstract<User, Integer> {
     public void updateUserCourses(String username, Course newCourse) {
         User loadedUser = findByUsername(username);
         loadedUser.getCourses().add(newCourse);
+        update(loadedUser);
+    }
+
+    public void updateStudentCourses(String username, Course forwardedCourse) {
+        User loadedUser = findByUsername(username);
+        Course loadedCourse = course.findById(forwardedCourse.getId());
+        loadedUser.getStudentCourses().add(loadedCourse);
         update(loadedUser);
     }
 

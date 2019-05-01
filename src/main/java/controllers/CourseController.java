@@ -27,6 +27,10 @@ public class CourseController {
         return course.findAll();
     }
 
+    @POST
+    public void addCourse(Course forwardedCourse) {
+        course.create(forwardedCourse);
+    }
 
     @GET
     @Path("/{id}")

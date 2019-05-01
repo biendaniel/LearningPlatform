@@ -37,4 +37,5 @@ public class CourseDao extends DaoAbstract<Course, Integer> {
         loadedCourse.getChapters().add(chapter);
         update(loadedCourse);
     }
+
 }
