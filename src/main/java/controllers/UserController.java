@@ -2,8 +2,10 @@ package controllers;
 
 import dao.CourseDao;
 import dao.UserDao;
+import dao.UserReportDao;
 import model.Course;
 import model.User;
+import model.UserReport;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -17,9 +19,10 @@ import java.util.List;
 public class UserController {
     @Inject
     private UserDao user;
-
     @Inject
     private CourseDao course;
+    @Inject
+    private UserReportDao userReport;
 
     @PUT
     @Path("/authorization")
@@ -38,9 +41,8 @@ public class UserController {
     }
 
     @GET
-    public Response getUserList() {
-        List<User> users = user.findAll();
-        return Response.ok(users).build();
+    public List<User> getUserList() {
+        return user.findAll();
     }
 
     @POST
@@ -54,6 +56,19 @@ public class UserController {
     @Path("/{id}/joinCourse")
     public void joinCourse(@PathParam("id") String username, Course course) {
         user.updateStudentCourses(username,course);
+    }
+
+    @GET
+    @Path("/{id}/reports")
+    public List<UserReport> getReports(@PathParam("id") String username){
+        return user.returnUserReports(username);
+    }
+
+    @POST
+    @Path("/{id}/addReport")
+    public void addReport(@PathParam("id") String username, UserReport newReport) {
+        userReport.create(newReport);
+        user.updateUserReports(username, newReport);
     }
 
     @Path("/{username}")

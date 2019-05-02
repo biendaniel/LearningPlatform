@@ -20,11 +20,12 @@ public class User {
     private String email;
     @ManyToOne
     private Role role;
-    @OneToMany()
+    @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "userID")
     private List<Course> courses;
-    @OneToMany()
+
+    @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "userID")
     private List<Opinion> opinions;
@@ -32,6 +33,10 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
     private List<Course> studentCourses;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany
+    private List<UserReport> userReports;
 
     private boolean isPremium;
     private boolean isBlocked;
@@ -160,6 +165,14 @@ public class User {
                 '}';
     }
 
+    public List<UserReport> getUserReports() {
+        return userReports;
+    }
+
+    public void setUserReports(List<UserReport> userReports) {
+        this.userReports = userReports;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -177,11 +190,12 @@ public class User {
                 Objects.equals(role, user.role) &&
                 Objects.equals(courses, user.courses) &&
                 Objects.equals(opinions, user.opinions) &&
-                Objects.equals(studentCourses, user.studentCourses);
+                Objects.equals(studentCourses, user.studentCourses) &&
+                Objects.equals(userReports, user.userReports);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, firstName, lastName, email, role, courses, opinions, studentCourses, isPremium, isBlocked, isVerified);
+        return Objects.hash(id, username, password, firstName, lastName, email, role, courses, opinions, studentCourses, isPremium, isBlocked, isVerified, userReports);
     }
 }

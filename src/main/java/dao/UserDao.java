@@ -3,6 +3,7 @@ package dao;
 
 import model.Course;
 import model.User;
+import model.UserReport;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -15,6 +16,8 @@ public class UserDao extends DaoAbstract<User, Integer> {
     @Inject
     CourseDao course;
 
+    @Inject
+    UserReportDao userReport;
     public List<User> findAll() {
         connectionDB.openCurrentSession();
         List<User> users = connectionDB.getCurrentSession().createQuery("from User").list();
@@ -50,7 +53,6 @@ public class UserDao extends DaoAbstract<User, Integer> {
     }
 
 
-
     public boolean checkUniquenessUsername(User user) {
         connectionDB.openCurrentSession();
         List<User> users = findAll();
@@ -77,7 +79,22 @@ public class UserDao extends DaoAbstract<User, Integer> {
         update(loadedUser);
     }
 
+    public void updateUserReports(String username, UserReport newReport) {
+        User loadedUser = findByUsername(username);
+        loadedUser.getUserReports().add(newReport);
+        update(loadedUser);
+    }
 
+    public List<UserReport> returnUserReports(String username) {
+        connectionDB.openCurrentSession();
+        User user = (User) connectionDB
+                .getCurrentSession()
+                .createQuery("FROM User where username =: username")
+                .setParameter("username", username)
+                .getSingleResult();
+        connectionDB.closeCurrentSession();
+        return user.getUserReports();
+    }
 }
 
 

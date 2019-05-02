@@ -49,7 +49,8 @@ public class ConnectionDB {
                 .addAnnotatedClass(File.class)
                 .addAnnotatedClass(Opinion.class)
                 .addAnnotatedClass(Lesson.class)
-                .addAnnotatedClass(LessonDate.class);
+                .addAnnotatedClass(LessonDate.class)
+                .addAnnotatedClass(UserReport.class);
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties());
         return configuration.buildSessionFactory(builder.build());
