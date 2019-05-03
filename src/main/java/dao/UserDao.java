@@ -3,6 +3,7 @@ package dao;
 
 import model.Course;
 import model.User;
+import model.UserOpinion;
 import model.UserReport;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -18,6 +19,7 @@ public class UserDao extends DaoAbstract<User, Integer> {
 
     @Inject
     UserReportDao userReport;
+
     public List<User> findAll() {
         connectionDB.openCurrentSession();
         List<User> users = connectionDB.getCurrentSession().createQuery("from User").list();
@@ -85,15 +87,29 @@ public class UserDao extends DaoAbstract<User, Integer> {
         update(loadedUser);
     }
 
+    public void updateUserOpinions(String username, UserOpinion newOpinion) {
+        User loadedUser = findByUsername(username);
+        loadedUser.getOpinions().add(newOpinion);
+        update(loadedUser);
+    }
+
     public List<UserReport> returnUserReports(String username) {
-        connectionDB.openCurrentSession();
-        User user = (User) connectionDB
-                .getCurrentSession()
-                .createQuery("FROM User where username =: username")
-                .setParameter("username", username)
-                .getSingleResult();
-        connectionDB.closeCurrentSession();
-        return user.getUserReports();
+        User loadedUser = findByUsername(username);
+        return loadedUser.getUserReports();
+    }
+
+    public List<UserOpinion> getOpinions(String username) {
+        User loadedUser = findByUsername(username);
+        return loadedUser.getOpinions();
+    }
+
+    public double getAvarangeOpinions(String username) {
+        List<UserOpinion> opinions = getOpinions(username);
+        return opinions
+                .stream()
+                .mapToDouble(UserOpinion::getValue)
+                .average()
+                .orElse(Double.NaN);
     }
 }
 

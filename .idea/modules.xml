@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pai.iml" filepath="$PROJECT_DIR$/.idea/modules/pai.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pai_main.iml" filepath="$PROJECT_DIR$/.idea/modules/pai_main.iml" group="pai" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pai_test.iml" filepath="$PROJECT_DIR$/.idea/modules/pai_test.iml" group="pai" />
+    </modules>
+  </component>
+</project>

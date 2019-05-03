@@ -27,8 +27,8 @@ public class User {
 
     @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "userID")
-    private List<Opinion> opinions;
+//    @JoinColumn(name = "userID")
+    private List<UserOpinion> opinions;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
@@ -117,11 +117,11 @@ public class User {
         isBlocked = blocked;
     }
 
-    public List<Opinion> getOpinions() {
+    public List<UserOpinion> getOpinions() {
         return opinions;
     }
 
-    public void setOpinions(List<Opinion> opinions) {
+    public void setOpinions(List<UserOpinion> opinions) {
         this.opinions = opinions;
     }
 

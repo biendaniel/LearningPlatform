@@ -2,9 +2,11 @@ package controllers;
 
 import dao.CourseDao;
 import dao.UserDao;
+import dao.UserOpinionDao;
 import dao.UserReportDao;
 import model.Course;
 import model.User;
+import model.UserOpinion;
 import model.UserReport;
 
 import javax.inject.Inject;
@@ -17,12 +19,15 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserController {
+
     @Inject
     private UserDao user;
     @Inject
     private CourseDao course;
     @Inject
-    private UserReportDao userReport;
+    private UserReportDao report;
+    @Inject
+    private UserOpinionDao opinion;
 
     @PUT
     @Path("/authorization")
@@ -49,25 +54,25 @@ public class UserController {
     @Path("/{id}/addCourse")
     public void addCourse(@PathParam("id") String username, Course newCourse) {
         course.create(newCourse);
-        user.updateUserCourses(username,newCourse);
+        user.updateUserCourses(username, newCourse);
     }
 
     @PATCH
     @Path("/{id}/joinCourse")
     public void joinCourse(@PathParam("id") String username, Course course) {
-        user.updateStudentCourses(username,course);
+        user.updateStudentCourses(username, course);
     }
 
     @GET
     @Path("/{id}/reports")
-    public List<UserReport> getReports(@PathParam("id") String username){
+    public List<UserReport> getReports(@PathParam("id") String username) {
         return user.returnUserReports(username);
     }
 
     @POST
     @Path("/{id}/addReport")
     public void addReport(@PathParam("id") String username, UserReport newReport) {
-        userReport.create(newReport);
+        report.create(newReport);
         user.updateUserReports(username, newReport);
     }
 
@@ -121,5 +126,24 @@ public class UserController {
         } catch (Exception e) {
 
         }
+    }
+
+    @POST
+    @Path("/{username}/opinions")
+    public void addOpinion(@PathParam("username") String username, UserOpinion forwardedOpinion) {
+        opinion.create(forwardedOpinion);
+        user.updateUserOpinions(username, forwardedOpinion);
+    }
+
+    @GET
+    @Path("/{username}/opinions")
+    public List<UserOpinion> getOpinions(@PathParam("username") String username) {
+        return user.getOpinions(username);
+    }
+
+    @GET
+    @Path("/{username}/rating")
+    public double getRating(@PathParam("username") String username) {
+        return user.getAvarangeOpinions(username);
     }
 }

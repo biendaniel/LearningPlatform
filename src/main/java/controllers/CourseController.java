@@ -2,9 +2,11 @@ package controllers;
 
 import dao.CourseChapterDao;
 import dao.CourseDao;
+import dao.CourseOpinionDao;
 import dao.UserDao;
 import model.Course;
 import model.CourseChapter;
+import model.CourseOpinion;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -21,6 +23,8 @@ public class CourseController {
     UserDao user;
     @Inject
     CourseChapterDao chapter;
+    @Inject
+    CourseOpinionDao opinion;
 
     @GET
     public List<Course> getCourseList() {
@@ -77,4 +81,24 @@ public class CourseController {
         chapter.create(forwardedChapter);
         course.updateCourseChapters(id, forwardedChapter);
     }
+
+    @POST
+    @Path("/{id}/opinions")
+    public void addOpinion(@PathParam("id") Integer id, CourseOpinion forwardedOpinion) {
+        opinion.create(forwardedOpinion);
+        course.updateCourseOpinions(id, forwardedOpinion);
+    }
+
+    @GET
+    @Path("/{id}/opinions")
+    public List<CourseOpinion> getOpinions(@PathParam("id") Integer id) {
+        return course.getOpinions(id);
+    }
+
+    @GET
+    @Path("/{id}/rating")
+    public double getRating(@PathParam("id") Integer id) {
+        return course.getAvarangeOpinions(id);
+    }
+
 }

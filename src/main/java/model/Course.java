@@ -24,8 +24,7 @@ public class Course {
     private List<CourseChapter> chapters;
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "opinionID")
-    private List<Opinion> opinions;
+    private List<CourseOpinion> opinions;
 
 
     public Course() {
@@ -64,11 +63,11 @@ public class Course {
         this.subject = subject;
     }
 
-    public List<Opinion> getOpinions() {
+    public List<CourseOpinion> getOpinions() {
         return opinions;
     }
 
-    public void setOpinions(List<Opinion> opinions) {
+    public void setOpinions(List<CourseOpinion> opinions) {
         this.opinions = opinions;
     }
 

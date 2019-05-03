@@ -2,8 +2,8 @@ package model;
 
 import javax.persistence.*;
 
-@Entity
-public class Opinion {
+@MappedSuperclass
+public abstract class Opinion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,11 +13,6 @@ public class Opinion {
     @ManyToOne
     private User raterUser; // oceniający
 
-    public Opinion(String content, Integer value, User raterUser) {
-        this.content = content;
-        this.value = value;
-        this.raterUser = raterUser;
-    }
 
     public Opinion() {
     }
