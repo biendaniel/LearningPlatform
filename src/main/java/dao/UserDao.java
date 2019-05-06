@@ -3,13 +3,22 @@ package dao;
 
 import model.Course;
 import model.User;
+import model.UserOpinion;
+import model.UserReport;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.Query;
 import java.util.List;
 
 @ApplicationScoped
 public class UserDao extends DaoAbstract<User, Integer> {
+
+    @Inject
+    CourseDao course;
+
+    @Inject
+    UserReportDao userReport;
 
     public List<User> findAll() {
         connectionDB.openCurrentSession();
@@ -46,7 +55,6 @@ public class UserDao extends DaoAbstract<User, Integer> {
     }
 
 
-
     public boolean checkUniquenessUsername(User user) {
         connectionDB.openCurrentSession();
         List<User> users = findAll();
@@ -66,7 +74,43 @@ public class UserDao extends DaoAbstract<User, Integer> {
         update(loadedUser);
     }
 
+    public void updateStudentCourses(String username, Course forwardedCourse) {
+        User loadedUser = findByUsername(username);
+        Course loadedCourse = course.findById(forwardedCourse.getId());
+        loadedUser.getStudentCourses().add(loadedCourse);
+        update(loadedUser);
+    }
 
+    public void updateUserReports(String username, UserReport newReport) {
+        User loadedUser = findByUsername(username);
+        loadedUser.getUserReports().add(newReport);
+        update(loadedUser);
+    }
+
+    public void updateUserOpinions(String username, UserOpinion newOpinion) {
+        User loadedUser = findByUsername(username);
+        loadedUser.getOpinions().add(newOpinion);
+        update(loadedUser);
+    }
+
+    public List<UserReport> returnUserReports(String username) {
+        User loadedUser = findByUsername(username);
+        return loadedUser.getUserReports();
+    }
+
+    public List<UserOpinion> getOpinions(String username) {
+        User loadedUser = findByUsername(username);
+        return loadedUser.getOpinions();
+    }
+
+    public double getAvarangeOpinions(String username) {
+        List<UserOpinion> opinions = getOpinions(username);
+        return opinions
+                .stream()
+                .mapToDouble(UserOpinion::getValue)
+                .average()
+                .orElse(Double.NaN);
+    }
 }
 
 

@@ -20,8 +20,6 @@ public class Initial {
     @Inject
     UserDao userDao;
     @Inject
-    OpinionDao opinionDao;
-    @Inject
     LessonDao lessonDao;
     @Inject
     LessonDateDao lessonDateDao;

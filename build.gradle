@@ -36,10 +36,10 @@ dependencies {
 
 
 
-    compile group: 'com.sun.jersey', name: 'jersey-core', version: '1.19.4'
-    compile group: 'com.sun.jersey.contribs', name: 'jersey-multipart', version: '1.19.4'
-    compile group: 'com.sun.jersey', name: 'jersey-server', version: '1.19.4'
-    compile group: 'org.jvnet.mimepull', name: 'mimepull', version: '1.9.11'
+//    compile group: 'com.sun.jersey', name: 'jersey-core', version: '1.19.4'
+//    compile group: 'com.sun.jersey.contribs', name: 'jersey-multipart', version: '1.19.4'
+//    compile group: 'com.sun.jersey', name: 'jersey-server', version: '1.19.4'
+//    compile group: 'org.jvnet.mimepull', name: 'mimepull', version: '1.9.11'
 //
 // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
 //    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
@@ -49,7 +49,7 @@ dependencies {
     // https://mvnrepository.com/artifact/commons-io/commons-io
 
 // https://mvnrepository.com/artifact/com.sun.jersey/jersey-servlet
-    compile group: 'com.sun.jersey', name: 'jersey-servlet', version: '1.19.4'
+//    compile group: 'com.sun.jersey', name: 'jersey-servlet', version: '1.19.4'
 
 
 

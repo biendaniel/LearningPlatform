@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class User {
@@ -19,14 +20,24 @@ public class User {
     private String email;
     @ManyToOne
     private Role role;
-    @OneToMany()
+    @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "userID")
     private List<Course> courses;
-    @OneToMany()
+
+    @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "userID")
-    private List<Opinion> opinions;
+//    @JoinColumn(name = "userID")
+    private List<UserOpinion> opinions;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany
+    private List<Course> studentCourses;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany
+    private List<UserReport> userReports;
+
     private boolean isPremium;
     private boolean isBlocked;
     private boolean isVerified;
@@ -106,11 +117,11 @@ public class User {
         isBlocked = blocked;
     }
 
-    public List<Opinion> getOpinions() {
+    public List<UserOpinion> getOpinions() {
         return opinions;
     }
 
-    public void setOpinions(List<Opinion> opinions) {
+    public void setOpinions(List<UserOpinion> opinions) {
         this.opinions = opinions;
     }
 
@@ -130,6 +141,15 @@ public class User {
         this.courses = courses;
     }
 
+
+    public List<Course> getStudentCourses() {
+        return studentCourses;
+    }
+
+    public void setStudentCourses(List<Course> studentCourses) {
+        this.studentCourses = studentCourses;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -143,5 +163,39 @@ public class User {
                 ", isPremium=" + isPremium +
                 ", isBlocked=" + isBlocked +
                 '}';
+    }
+
+    public List<UserReport> getUserReports() {
+        return userReports;
+    }
+
+    public void setUserReports(List<UserReport> userReports) {
+        this.userReports = userReports;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return isPremium == user.isPremium &&
+                isBlocked == user.isBlocked &&
+                isVerified == user.isVerified &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(role, user.role) &&
+                Objects.equals(courses, user.courses) &&
+                Objects.equals(opinions, user.opinions) &&
+                Objects.equals(studentCourses, user.studentCourses) &&
+                Objects.equals(userReports, user.userReports);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, firstName, lastName, email, role, courses, opinions, studentCourses, isPremium, isBlocked, isVerified, userReports);
     }
 }

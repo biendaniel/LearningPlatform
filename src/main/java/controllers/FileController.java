@@ -1,7 +1,5 @@
 package controllers;
 
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
 import dao.FileDao;
 import model.File;
 

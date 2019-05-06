@@ -1,7 +1,7 @@
 package controllers;
 
-import dao.OpinionDao;
-import model.Opinion;
+import dao.UserOpinionDao;
+import model.UserOpinion;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,31 +14,31 @@ import java.util.List;
 public class OpinionController {
 
     @Inject
-    OpinionDao opinion;
+    UserOpinionDao opinion;
 
     @GET
-    public List<Opinion> getOpinionList() {
-        List<Opinion> opinions = opinion.findAll();
+    public List<UserOpinion> getOpinionList() {
+        List<UserOpinion> opinions = opinion.findAll();
         return opinions;
     }
 
     @POST
-    public void addOpinion(Opinion forwardedOpinion) {
+    public void addOpinion(UserOpinion forwardedOpinion) {
         opinion.create(forwardedOpinion);
     }
 
 
     @GET
     @Path("/{id}")
-    public Opinion getOpinionById(@PathParam("id") Integer id) {
-        Opinion loadedOpinion = opinion.findById(id);
+    public UserOpinion getOpinionById(@PathParam("id") Integer id) {
+        UserOpinion loadedOpinion = opinion.findById(id);
         return loadedOpinion;
     }
 
     @PATCH
     @Path("/{id}")
-    public void editOpinion(@PathParam("id") Integer id, Opinion forwardedOpinion) {
-        Opinion loadedOpinion = opinion.findById(id);
+    public void editOpinion(@PathParam("id") Integer id, UserOpinion forwardedOpinion) {
+        UserOpinion loadedOpinion = opinion.findById(id);
         if (forwardedOpinion.getContent() != null) {
             loadedOpinion.setContent(forwardedOpinion.getContent());
         }
@@ -54,7 +54,7 @@ public class OpinionController {
     @DELETE
     @Path("/{id}")
     public void deleteOpinion(@PathParam("id") Integer id) {
-        Opinion loadedOpinion = opinion.findById(id);
+        UserOpinion loadedOpinion = opinion.findById(id);
         opinion.delete(loadedOpinion);
     }
 }

@@ -47,9 +47,12 @@ public class ConnectionDB {
                 .addAnnotatedClass(Subject.class)
                 .addAnnotatedClass(CourseChapter.class)
                 .addAnnotatedClass(File.class)
+                .addAnnotatedClass(UserOpinion.class)
+                .addAnnotatedClass(CourseOpinion.class)
                 .addAnnotatedClass(Opinion.class)
                 .addAnnotatedClass(Lesson.class)
-                .addAnnotatedClass(LessonDate.class);
+                .addAnnotatedClass(LessonDate.class)
+                .addAnnotatedClass(UserReport.class);
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties());
         return configuration.buildSessionFactory(builder.build());

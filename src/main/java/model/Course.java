@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -15,19 +16,20 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String description;
     @ManyToOne
     private Subject subject;
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "courseID")
+    @JoinColumn(name = "chaptersID")
     private List<CourseChapter> chapters;
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "opinionID")
-    private List<Opinion> opinions;
+    private List<CourseOpinion> opinions;
 
-    public Course() { }
+
+    public Course() {
+
+    }
 
     public List<CourseChapter> getChapters() {
         return chapters;
@@ -61,17 +63,13 @@ public class Course {
         this.subject = subject;
     }
 
-    public List<Opinion> getOpinions() {
+    public List<CourseOpinion> getOpinions() {
         return opinions;
     }
 
-    public void setOpinions(List<Opinion> opinions) {
+    public void setOpinions(List<CourseOpinion> opinions) {
         this.opinions = opinions;
     }
-
-    public String getDescription() { return description; }
-
-    public void setDescription(String description) { this.description = description; }
 
 
     @Override
@@ -80,7 +78,23 @@ public class Course {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", subject=" + subject +
-                ", description=" + description +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(id, course.id) &&
+                Objects.equals(name, course.name) &&
+                Objects.equals(subject, course.subject) &&
+                Objects.equals(chapters, course.chapters) &&
+                Objects.equals(opinions, course.opinions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, subject, chapters, opinions);
     }
 }

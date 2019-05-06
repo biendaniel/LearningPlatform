@@ -2,6 +2,7 @@ package dao;
 
 import model.Course;
 import model.CourseChapter;
+import model.CourseOpinion;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.Query;
@@ -36,5 +37,26 @@ public class CourseDao extends DaoAbstract<Course, Integer> {
         Course loadedCourse = findById(id);
         loadedCourse.getChapters().add(chapter);
         update(loadedCourse);
+    }
+
+    public void updateCourseOpinions(Integer id, CourseOpinion opinion) {
+        Course loadedCourse = findById(id);
+        loadedCourse.getOpinions().add(opinion);
+        update(loadedCourse);
+    }
+
+    public List<CourseOpinion> getOpinions(Integer id) {
+        Course loadedCourse = findById(id);
+        return loadedCourse.getOpinions();
+    }
+
+    public double getAvarangeOpinions(Integer id) {
+        List<CourseOpinion> opinions = getOpinions(id);
+        return opinions
+                .stream()
+                .mapToDouble(CourseOpinion::getValue)
+                .average()
+                .orElse(Double.NaN);
+
     }
 }
