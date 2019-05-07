@@ -101,4 +101,10 @@ public class CourseController {
         return course.getAvarangeOpinions(id);
     }
 
+    @GET
+    @Path("/{name}/find")
+    public List<Course> getCoursesByEnteredString(@PathParam("name") String name ) {
+        return course.getCoursesByEnteredString(name);
+    }
+
 }

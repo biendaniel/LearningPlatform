@@ -1,6 +1,8 @@
 package controllers;
 
+import dao.CourseDao;
 import dao.SubjectDao;
+import model.Course;
 import model.Subject;
 
 import javax.inject.Inject;
@@ -15,6 +17,8 @@ public class SubjectController {
 
     @Inject
     SubjectDao subject;
+    @Inject
+    CourseDao course;
 
     @GET
     public List<Subject> getSubjectList() {
@@ -49,5 +53,11 @@ public class SubjectController {
             loadedSubject.setName(forwardedSubject.getName());
             subject.update(loadedSubject);
         }
+    }
+
+    @GET
+    @Path("/{id}/courses")
+    public List<Course> getSubjectCourses (@PathParam("id") Integer id) {
+        return course.getCoursesBySubject(id);
     }
 }

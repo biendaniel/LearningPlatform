@@ -3,14 +3,19 @@ package dao;
 import model.Course;
 import model.CourseChapter;
 import model.CourseOpinion;
+import model.Subject;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.Query;
 import java.util.List;
 
 @ApplicationScoped
 public class CourseDao extends DaoAbstract<Course, Integer> {
 
+
+    @Inject
+    SubjectDao subject;
     public Course findById(Integer id) {
         connectionDB.openCurrentSession();
         Course course = connectionDB.getCurrentSession().get(Course.class, id);
@@ -57,6 +62,27 @@ public class CourseDao extends DaoAbstract<Course, Integer> {
                 .mapToDouble(CourseOpinion::getValue)
                 .average()
                 .orElse(Double.NaN);
-
     }
+
+    public List<Course> getCoursesBySubject(Integer id) {
+        Subject loadedSubject = subject.findById(id);
+        connectionDB.openCurrentSession();
+        Query query = connectionDB.getCurrentSession().createQuery("FROM Course where subject =: subject");
+        List<Course> courses =  query
+                .setParameter("subject", loadedSubject)
+                .getResultList();
+        connectionDB.closeCurrentSession();
+        return courses;
+    }
+
+    public List<Course> getCoursesByEnteredString(String enteredString) {
+        connectionDB.openCurrentSession();
+        Query query = connectionDB.getCurrentSession().createQuery("FROM Course where name like :string");
+        List<Course> courses =  query
+                .setParameter("string", "%" + enteredString + "%")
+                .getResultList();
+        connectionDB.closeCurrentSession();
+        return courses;
+    }
+
 }

@@ -111,6 +111,18 @@ public class UserDao extends DaoAbstract<User, Integer> {
                 .average()
                 .orElse(Double.NaN);
     }
+
+    public List<User> getUserByEnteredString(String enteredString) {
+        connectionDB.openCurrentSession();
+        Query query = connectionDB.getCurrentSession().createQuery("FROM User where username like :username OR firstName like :firstname OR lastName like :lastname");
+        List<User> users =  query
+                .setParameter("username", "%" + enteredString + "%")
+                .setParameter("firstname", "%" + enteredString + "%")
+                .setParameter("lastname", "%" + enteredString + "%")
+                .getResultList();
+        connectionDB.closeCurrentSession();
+        return users;
+    }
 }
 
 
