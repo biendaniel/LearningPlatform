@@ -146,4 +146,10 @@ public class UserController {
     public double getRating(@PathParam("username") String username) {
         return user.getAvarangeOpinions(username);
     }
+
+    @GET
+    @Path("/{name}/find")
+    public List<User> getUserByEnteredString(@PathParam("name") String name){
+        return user.getUserByEnteredString(name);
+    }
 }
