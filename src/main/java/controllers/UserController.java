@@ -77,7 +77,7 @@ public class UserController {
     }
 
     @Path("/{username}")
-    @PATCH
+    @POST
     public void editUser(@PathParam("username") String username, User forwardedUser) {
         User loadedUser = user.findByUsername(username);
         if (forwardedUser.getEmail() != null) {
@@ -86,19 +86,18 @@ public class UserController {
         if (forwardedUser.getPassword() != null) {
             loadedUser.setPassword(forwardedUser.getPassword());
         }
-        if (forwardedUser.getBlocked()) {
-            loadedUser.setBlocked(true);
+
+        if(forwardedUser.getBlocked() != null) {
+            if (forwardedUser.getBlocked()) {
+                loadedUser.setBlocked(true);
+            }
+            if (!forwardedUser.getBlocked()) {
+                loadedUser.setBlocked(false);
+            }
         }
 
-        if (!forwardedUser.getBlocked()) {
-            loadedUser.setBlocked(false);
-        }
         if (forwardedUser.getPremium()) {
             loadedUser.setPremium(true);
-        }
-
-        if (!forwardedUser.getPremium()) {
-            loadedUser.setPremium(false);
         }
         if (forwardedUser.getOpinions() != null) {
             loadedUser.getOpinions().add(forwardedUser.getOpinions().stream().findFirst().get());
