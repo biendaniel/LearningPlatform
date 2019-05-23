@@ -18,16 +18,19 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+
     @ManyToOne
+    @JoinColumn(name = "roleID")
     private Role role;
+
     @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "ownerID")
     private List<Course> courses;
 
     @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-//    @JoinColumn(name = "userID")
+    @JoinColumn(name = "evaluatedUserID")
     private List<UserOpinion> opinions;
 
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -36,11 +39,12 @@ public class User {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany
+    @JoinColumn(name = "reportedUserID")
     private List<UserReport> userReports;
 
-    private boolean isPremium;
-    private boolean isBlocked;
-    private boolean isVerified;
+    private Boolean isPremium;
+    private Boolean isBlocked;
+    private Boolean isVerified;
 
     public User() {
     }
@@ -101,36 +105,12 @@ public class User {
         this.role = role;
     }
 
-    public boolean isPremium() {
-        return isPremium;
-    }
-
-    public void setPremium(boolean premium) {
-        isPremium = premium;
-    }
-
-    public boolean isBlocked() {
-        return isBlocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
-    }
-
     public List<UserOpinion> getOpinions() {
         return opinions;
     }
 
     public void setOpinions(List<UserOpinion> opinions) {
         this.opinions = opinions;
-    }
-
-    public boolean isVerified() {
-        return isVerified;
-    }
-
-    public void setVerified(boolean verified) {
-        isVerified = verified;
     }
 
     public List<Course> getCourses() {
@@ -173,15 +153,36 @@ public class User {
         this.userReports = userReports;
     }
 
+    public Boolean getPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(Boolean premium) {
+        isPremium = premium;
+    }
+
+    public Boolean getBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(Boolean blocked) {
+        isBlocked = blocked;
+    }
+
+    public Boolean getVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(Boolean verified) {
+        isVerified = verified;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return isPremium == user.isPremium &&
-                isBlocked == user.isBlocked &&
-                isVerified == user.isVerified &&
-                Objects.equals(id, user.id) &&
+        return Objects.equals(id, user.id) &&
                 Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(firstName, user.firstName) &&
@@ -191,11 +192,14 @@ public class User {
                 Objects.equals(courses, user.courses) &&
                 Objects.equals(opinions, user.opinions) &&
                 Objects.equals(studentCourses, user.studentCourses) &&
-                Objects.equals(userReports, user.userReports);
+                Objects.equals(userReports, user.userReports) &&
+                Objects.equals(isPremium, user.isPremium) &&
+                Objects.equals(isBlocked, user.isBlocked) &&
+                Objects.equals(isVerified, user.isVerified);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, firstName, lastName, email, role, courses, opinions, studentCourses, isPremium, isBlocked, isVerified, userReports);
+        return Objects.hash(id, username, password, firstName, lastName, email, role, courses, opinions, studentCourses, userReports, isPremium, isBlocked, isVerified);
     }
 }

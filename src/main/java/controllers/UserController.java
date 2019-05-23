@@ -86,11 +86,19 @@ public class UserController {
         if (forwardedUser.getPassword() != null) {
             loadedUser.setPassword(forwardedUser.getPassword());
         }
-        if (forwardedUser.isBlocked()) {
+        if (forwardedUser.getBlocked()) {
             loadedUser.setBlocked(true);
         }
-        if (forwardedUser.isPremium()) {
+
+        if (!forwardedUser.getBlocked()) {
+            loadedUser.setBlocked(false);
+        }
+        if (forwardedUser.getPremium()) {
             loadedUser.setPremium(true);
+        }
+
+        if (!forwardedUser.getPremium()) {
+            loadedUser.setPremium(false);
         }
         if (forwardedUser.getOpinions() != null) {
             loadedUser.getOpinions().add(forwardedUser.getOpinions().stream().findFirst().get());
