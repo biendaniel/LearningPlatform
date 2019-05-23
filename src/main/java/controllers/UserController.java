@@ -52,12 +52,13 @@ public class UserController {
 
     @POST
     @Path("/{id}/addCourse")
-    public void addCourse(@PathParam("id") String username, Course newCourse) {
+    public Integer addCourse(@PathParam("id") String username, Course newCourse) {
         course.create(newCourse);
         user.updateUserCourses(username, newCourse);
+        return 1;
     }
 
-    @PATCH
+    @POST
     @Path("/{id}/joinCourse")
     public void joinCourse(@PathParam("id") String username, Course course) {
         user.updateStudentCourses(username, course);
@@ -77,7 +78,7 @@ public class UserController {
     }
 
     @Path("/{username}")
-    @PATCH
+    @POST
     public void editUser(@PathParam("username") String username, User forwardedUser) {
         User loadedUser = user.findByUsername(username);
         if (forwardedUser.getEmail() != null) {
@@ -88,6 +89,9 @@ public class UserController {
         }
         if (forwardedUser.isBlocked()) {
             loadedUser.setBlocked(true);
+        }
+        if (!forwardedUser.isBlocked()) {
+            loadedUser.setBlocked(false);
         }
         if (forwardedUser.isPremium()) {
             loadedUser.setPremium(true);
@@ -119,13 +123,14 @@ public class UserController {
 
     @DELETE
     @Path("/{username}")
-    public void deleteUser(@PathParam("username") String username) {
+    public Integer deleteUser(@PathParam("username") String username) {
         try {
             User loadedUser = user.findByUsername(username);
             user.delete(loadedUser);
         } catch (Exception e) {
 
         }
+        return 1;
     }
 
     @POST
@@ -146,6 +151,12 @@ public class UserController {
     public double getRating(@PathParam("username") String username) {
         return user.getAvarangeOpinions(username);
     }
+    @GET
+    @Path("/text")
+    public String getText() {
+        return "COS TAM JEST";
+    }
+
 
     @GET
     @Path("/{name}/find")
