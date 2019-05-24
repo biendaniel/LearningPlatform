@@ -20,9 +20,11 @@ public class Course {
     private Subject subject;
     @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "chaptersID")
+    @JoinColumn(name = "courseID")
     private List<CourseChapter> chapters;
     @OneToMany()
+    @JoinColumn(name = "courseID" +
+            "")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<CourseOpinion> opinions;
 

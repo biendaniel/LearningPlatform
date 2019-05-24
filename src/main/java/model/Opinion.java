@@ -11,6 +11,7 @@ public abstract class Opinion {
     private String content;
     private Integer value;
     @ManyToOne
+    @JoinColumn(name = "raterUserID")
     private User raterUser; // oceniający
 
 

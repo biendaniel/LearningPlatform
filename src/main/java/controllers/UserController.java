@@ -88,15 +88,15 @@ public class UserController {
         }
 
         if(forwardedUser.getBlocked() != null) {
-            if (forwardedUser.getBlocked()) {
+            if (forwardedUser.getBlocked().equals(true)) {
                 loadedUser.setBlocked(true);
             }
-            if (!forwardedUser.getBlocked()) {
+            if (!forwardedUser.getBlocked().equals(false)) {
                 loadedUser.setBlocked(false);
             }
         }
 
-        if (forwardedUser.getPremium()) {
+        if (forwardedUser.getPremium() != null) {
             loadedUser.setPremium(true);
         }
         if (forwardedUser.getOpinions() != null) {
