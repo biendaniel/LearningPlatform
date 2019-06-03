@@ -55,7 +55,7 @@ public class CourseDao extends DaoAbstract<Course, Integer> {
         return loadedCourse.getOpinions();
     }
 
-    public double getAvarangeOpinions(Integer id) {
+    public double getAvarageOpinions(Integer id) {
         List<CourseOpinion> opinions = getOpinions(id);
         return opinions
                 .stream()

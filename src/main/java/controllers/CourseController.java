@@ -98,7 +98,7 @@ public class CourseController {
     @GET
     @Path("/{id}/rating")
     public double getRating(@PathParam("id") Integer id) {
-        return course.getAvarangeOpinions(id);
+        return course.getAvarageOpinions(id);
     }
 
     @GET

@@ -46,16 +46,4 @@ public class Initial {
         subjectDao.create(subject2);
     }
 
-    void initFile() {
-        File file = new File();
-        file.setId(1);
-        file.setName("Kolos Matma");
-        file.setUrl("files/kolos.pdf");
-        File file2 = new File();
-        file2.setId(2);
-        file2.setName("Kolos Polski");
-        file2.setUrl("files/kolosPolski.pdf");
-        fileDao.create(file);
-        fileDao.create(file2);
-    }
 }

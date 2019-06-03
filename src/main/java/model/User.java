@@ -30,7 +30,7 @@ public class User {
 
     @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "evaluatedUserID")
+    @JoinColumn(name = "evaluated_user_id")
     private List<UserOpinion> opinions;
 
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -39,7 +39,7 @@ public class User {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany
-    @JoinColumn(name = "reportedUserID")
+    @JoinColumn(name = "reported_user_id")
     private List<UserReport> userReports;
 
     private Boolean isPremium;

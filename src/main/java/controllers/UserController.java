@@ -95,7 +95,6 @@ public class UserController {
                 loadedUser.setBlocked(false);
             }
         }
-
         if (forwardedUser.getPremium() != null) {
             loadedUser.setPremium(true);
         }
