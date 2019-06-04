@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
 
 import dao.CourseDao;
 import helpful.Generator;
@@ -17,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 
@@ -32,7 +34,12 @@ public class CourseControllerTest {
     @Before
     public void init() {
         given(courseDao.findById(anyInt())).willReturn(Generator.getRandomCourse());
-//        given(courseDao.getOpinions(anyInt())).willReturn(Generator.getRandomOpinions());
+        given(courseDao.getAvarageOpinions(anyInt())).willReturn(Generator
+                .getRandomOpinions()
+                .stream()
+                .mapToDouble(CourseOpinion::getValue)
+                .average()
+                .orElse(Double.NaN));
     }
 
 
@@ -45,14 +52,6 @@ public class CourseControllerTest {
     @Test
     public void should_return_pass_result() {
         double rating = courseController.getRating(1);
-        courseController
-                .getCourseById(1)
-                .getOpinions()
-                .stream()
-                .mapToInt(CourseOpinion::getValue)
-                .forEach(System.out::println);
-//
-        System.out.println(rating);
         Assert.assertEquals(rating, 2.0, 0.1);
     }
 
