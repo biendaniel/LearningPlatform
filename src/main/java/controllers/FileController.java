@@ -1,5 +1,8 @@
 package controllers;
 
+//import com.sun.jersey.core.header.FormDataContentDisposition;
+//import com.sun.jersey.multipart.FormDataParam;
+//import com.sun.jersey.server.impl.model.method.dispatch.MultipartFormDispatchProvider;
 import dao.FileDao;
 import model.File;
 
@@ -11,6 +14,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.List;
+//import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+//import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 
 @Path("/files")
 @Produces(MediaType.APPLICATION_JSON)
@@ -58,24 +63,26 @@ public class FileController {
         file.delete(loadedFile);
     }
 
-
 //    @POST
 //    @Path("/img")
 //    @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    public void addFile(@Context HttpServletRequest request) {
-//        request.get
-//
-//    }
-//    public void addFile(File forwardedFile)
-//    @POST
-//    @Path("/img")
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    public Response uploadFile(@FormDataParam("file") InputStream uploadedStream,
+//    public Response uploadFile(@DefaultValue("true") @FormDataParam("file") InputStream uploadedStream,
 //                               @FormDataParam("file") FormDataContentDisposition fileDetail) {
 //        String fileName = fileDetail.getFileName();
 ////        saveToFile(uploadedStream,fileName);
 //        String output = "File saved to server location : " + fileName;
 //        return Response.status(200).entity(output).build();
 //    }
+
+//    @POST
+//    @Path("/img")
+//    @Consumes("multipart/form-data")
+//    public Response uploadFile( MultipartFormDataInput input) {
+//        String fileName = "";
+////        saveToFile(uploadedStream,fileName);
+//        String output = "File saved to server location : " + fileName;
+//        return Response.status(200).entity(output).build();
+//    }
+
 
 }

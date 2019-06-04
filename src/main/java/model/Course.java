@@ -80,6 +80,8 @@ public class Course {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", subject=" + subject +
+                ", chapters=" + chapters +
+                ", opinions=" + opinions +
                 '}';
     }
 

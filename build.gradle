@@ -31,9 +31,9 @@ dependencies {
 
 //    compile group: 'org.jboss.resteasy', name: 'resteasy-multipart-provider', version: '2.2.0.GA'
     // https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-multipart-provider
-    compile group: 'org.jboss.resteasy', name: 'resteasy-multipart-provider', version: '2.2.0.GA'
-    compile group: 'org.jboss.resteasy', name: 'resteasy-jaxrs', version: '2.2.1.GA'
-    compile group: 'commons-io', name: 'commons-io', version: '2.0.1'
+//    compile group: 'org.jboss.resteasy', name: 'resteasy-multipart-provider', version: '2.2.0.GA'
+//    compile group: 'org.jboss.resteasy', name: 'resteasy-jaxrs', version: '2.2.1.GA'
+//    compile group: 'commons-io', name: 'commons-io', version: '2.0.1'
 
 
 

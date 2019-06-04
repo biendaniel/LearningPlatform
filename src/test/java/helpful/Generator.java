@@ -14,11 +14,11 @@ public class Generator {
         CourseOpinion courseOpinion1 = new CourseOpinion();
         courseOpinion1.setValue(1);
         CourseOpinion courseOpinion2 = new CourseOpinion();
-        courseOpinion1.setValue(2);
+        courseOpinion2.setValue(2);
         CourseOpinion courseOpinion3 = new CourseOpinion();
-        courseOpinion1.setValue(3);
+        courseOpinion3.setValue(3);
         CourseOpinion courseOpinion4 = new CourseOpinion();
-        courseOpinion1.setValue(2);
+        courseOpinion4.setValue(2);
 
         opinions.add(courseOpinion1);
         opinions.add(courseOpinion2);
