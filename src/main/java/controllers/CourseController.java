@@ -7,6 +7,7 @@ import dao.UserDao;
 import model.Course;
 import model.CourseChapter;
 import model.CourseOpinion;
+import model.User;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -70,7 +71,7 @@ public class CourseController {
 
     @GET
     @Path("/{id}/owner")
-    public String getCourseOwnerUsername(@PathParam("id") Integer id) {
+    public User getCourseOwnerUsername(@PathParam("id") Integer id) {
         return course.findCourseOwner(id);
     }
 
@@ -98,7 +99,13 @@ public class CourseController {
     @GET
     @Path("/{id}/rating")
     public double getRating(@PathParam("id") Integer id) {
-        return course.getAvarageOpinions(id);
+        List<CourseOpinion> opinions = course.getOpinions(id);
+        return opinions
+                .stream()
+                .mapToDouble(CourseOpinion::getValue)
+                .average()
+                .orElse(Double.NaN);
+
     }
 
     @GET

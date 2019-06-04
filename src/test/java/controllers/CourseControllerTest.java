@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import dao.CourseDao;
-import helpful.Generator;
 import model.Course;
 import model.CourseOpinion;
 import org.junit.Assert;
@@ -31,8 +30,8 @@ public class CourseControllerTest {
 
     @Before
     public void init() {
-        given(courseDao.findById(anyInt())).willReturn(Generator.getRandomCourse());
-//        given(courseDao.getOpinions(anyInt())).willReturn(Generator.getRandomOpinions());
+        given(courseDao.findById(anyInt())).willReturn(getRandomCourse());
+        given(courseDao.getOpinions(anyInt())).willReturn(getRandomOpinions());
     }
 
 
@@ -45,15 +44,34 @@ public class CourseControllerTest {
     @Test
     public void should_return_pass_result() {
         double rating = courseController.getRating(1);
-        courseController
-                .getCourseById(1)
-                .getOpinions()
-                .stream()
-                .mapToInt(CourseOpinion::getValue)
-                .forEach(System.out::println);
-//
-        System.out.println(rating);
         Assert.assertEquals(rating, 2.0, 0.1);
+    }
+
+    public static List<CourseOpinion> getRandomOpinions() {
+        List<CourseOpinion> opinions = new ArrayList<>();
+        CourseOpinion courseOpinion1 = new CourseOpinion();
+        courseOpinion1.setValue(1);
+        CourseOpinion courseOpinion2 = new CourseOpinion();
+        courseOpinion2.setValue(2);
+        CourseOpinion courseOpinion3 = new CourseOpinion();
+        courseOpinion3.setValue(3);
+        CourseOpinion courseOpinion4 = new CourseOpinion();
+        courseOpinion4.setValue(2);
+
+        opinions.add(courseOpinion1);
+        opinions.add(courseOpinion2);
+        opinions.add(courseOpinion3);
+        opinions.add(courseOpinion4);
+
+        return opinions;
+    }
+
+    public static Course getRandomCourse() {
+        Course course = new Course();
+        course.setId(1);
+        course.setName("Matma I");
+        course.setOpinions(getRandomOpinions());
+        return course;
     }
 
 

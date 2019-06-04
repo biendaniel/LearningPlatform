@@ -1,9 +1,6 @@
 package dao;
 
-import model.Course;
-import model.CourseChapter;
-import model.CourseOpinion;
-import model.Subject;
+import model.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -30,12 +27,12 @@ public class CourseDao extends DaoAbstract<Course, Integer> {
         return courses;
     }
 
-    public String findCourseOwner(Integer id) {
+    public User findCourseOwner(Integer id) {
         connectionDB.openCurrentSession();
-        Query query = connectionDB.getCurrentSession().createNativeQuery("SELECT username FROM User u, Course c WHERE c.id = :id AND c.userID = u.id");
-        String username =(String) query.setParameter("id", id).getSingleResult();
+        Query query = connectionDB.getCurrentSession().createNativeQuery("SELECT u.* FROM User u, Course c WHERE c.id = :id AND c.ownerID = u.id",User.class);
+        User user =(User) query.setParameter("id", id).getSingleResult();
         connectionDB.closeCurrentSession();
-        return username;
+        return user;
     }
 
     public void updateCourseChapters(Integer id, CourseChapter chapter) {
@@ -57,7 +54,6 @@ public class CourseDao extends DaoAbstract<Course, Integer> {
 
     public double getAvarageOpinions(Integer id) {
         List<CourseOpinion> opinions = getOpinions(id);
-        System.out.println("Bylimy tu");
         return opinions
                 .stream()
                 .mapToDouble(CourseOpinion::getValue)
