@@ -100,11 +100,7 @@ public class CourseController {
     @Path("/{id}/rating")
     public double getRating(@PathParam("id") Integer id) {
         List<CourseOpinion> opinions = course.getOpinions(id);
-        return opinions
-                .stream()
-                .mapToDouble(CourseOpinion::getValue)
-                .average()
-                .orElse(Double.NaN);
+        return course.getAvarageOpinions(opinions);
 
     }
 

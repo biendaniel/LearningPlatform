@@ -1,48 +1,38 @@
-package controllers;
+package dao;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import dao.CourseDao;
 import model.Course;
 import model.CourseOpinion;
 import org.junit.Assert;
 import org.junit.Before;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CourseControllerTest {
+public class CourseDaoTest {
 
-    @Mock
-    CourseDao courseDao;
-
-    @InjectMocks
-    CourseController courseController;
+    private CourseDao courseDao;
 
     @Before
     public void init() {
-        given(courseDao.findById(anyInt())).willReturn(getCourseMock());
+        courseDao = new CourseDao();
     }
-
-
     @Test
-    public void should_return_correct_name() {
-        Course course = courseController.getCourseById(1);
-        Assert.assertEquals(course.getName(), "Matma I");
+    public void should_return_pass_result() {
+        //when
+        double rating = courseDao.getAvarageOpinions(getOpinionCourseMock());
+        //then
+        Assert.assertEquals(rating, 2.0, 0.1);
     }
 
-
-
-    public static List<CourseOpinion> getCourseOpinionsMock() {
+    public static List<CourseOpinion> getOpinionCourseMock() {
         List<CourseOpinion> opinions = new ArrayList<>();
         CourseOpinion courseOpinion1 = new CourseOpinion();
         courseOpinion1.setValue(1);
@@ -60,14 +50,5 @@ public class CourseControllerTest {
 
         return opinions;
     }
-
-    public static Course getCourseMock() {
-        Course course = new Course();
-        course.setId(1);
-        course.setName("Matma I");
-        course.setOpinions(getCourseOpinionsMock());
-        return course;
-    }
-
 
 }

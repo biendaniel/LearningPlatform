@@ -52,8 +52,7 @@ public class CourseDao extends DaoAbstract<Course, Integer> {
         return loadedCourse.getOpinions();
     }
 
-    public double getAvarageOpinions(Integer id) {
-        List<CourseOpinion> opinions = getOpinions(id);
+    public double getAvarageOpinions(List<CourseOpinion> opinions) {
         return opinions
                 .stream()
                 .mapToDouble(CourseOpinion::getValue)
