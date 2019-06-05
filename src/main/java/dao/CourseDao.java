@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @ApplicationScoped
 public class CourseDao extends DaoAbstract<Course, Integer> {
@@ -59,6 +60,7 @@ public class CourseDao extends DaoAbstract<Course, Integer> {
                 .average()
                 .orElse(Double.NaN);
     }
+
 
     public List<Course> getCoursesBySubject(Integer id) {
         Subject loadedSubject = subject.findById(id);

@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @Path("/courses")
 @Produces(MediaType.APPLICATION_JSON)
