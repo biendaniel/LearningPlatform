@@ -1,6 +1,10 @@
 package model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Lesson {
@@ -11,20 +15,23 @@ public class Lesson {
     private Integer id;
     private String name;
     private Integer cost;
-    @ManyToOne
-    private User teacher;
-    @ManyToOne
-    private Subject subject;
 
-    public Lesson(String name, Integer cost, User teacher, Subject subject) {
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User user;
+
+    public Lesson(String name, Integer cost, List<LessonDate> lessonDate,User user) {
         this.name = name;
         this.cost = cost;
-        this.teacher = teacher;
-        this.subject = subject;
+        this.user = user;
     }
 
     public Lesson() {
     }
+
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
 
     public Integer getId() {
         return id;
@@ -50,21 +57,6 @@ public class Lesson {
         this.cost = cost;
     }
 
-    public User getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(User teacher) {
-        this.teacher = teacher;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
 
     @Override
     public String toString() {
@@ -72,8 +64,6 @@ public class Lesson {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", cost=" + cost +
-                ", teacher=" + teacher +
-                ", subject=" + subject +
                 '}';
     }
 }

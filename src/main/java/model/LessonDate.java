@@ -10,17 +10,21 @@ public class LessonDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private DateFormat date;
-    @ManyToOne
-    private User teacher;
-    @ManyToOne
-    private User student;
+    private String day;
+    private String hourFrom;
+    private String hourTo;
+    private Boolean isFree;
+    private Boolean isConfirmed;
 
-    public LessonDate(DateFormat date, User teacher, User student) {
-        this.date = date;
-        this.teacher = teacher;
-        this.student = student;
-    }
+    @ManyToOne
+    @JoinColumn(name = "lesson_id")
+    private Lesson lesson;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private User user;
+
+
 
     public LessonDate() {
     }
@@ -33,37 +37,72 @@ public class LessonDate {
         this.id = id;
     }
 
-    public DateFormat getDate() {
-        return date;
+    public String getDay() {
+        return day;
     }
 
-    public void setDate(DateFormat date) {
-        this.date = date;
+    public void setDay(String day) {
+        this.day = day;
     }
 
-    public User getTeacher() {
-        return teacher;
+    public String getHourFrom() {
+        return hourFrom;
     }
 
-    public void setTeacher(User teacher) {
-        this.teacher = teacher;
+    public void setHourFrom(String hourFrom) {
+        this.hourFrom = hourFrom;
     }
 
-    public User getStudent() {
-        return student;
+    public String getHourTo() {
+        return hourTo;
     }
 
-    public void setStudent(User student) {
-        this.student = student;
+    public void setHourTo(String hourTo) {
+        this.hourTo = hourTo;
+    }
+
+    public Boolean getFree() {
+        return isFree;
+    }
+
+    public void setFree(Boolean free) {
+        isFree = free;
+    }
+
+    public Boolean getConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setConfirmed(Boolean confirmed) {
+        isConfirmed = confirmed;
+    }
+
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
         return "LessonDate{" +
                 "id=" + id +
-                ", date=" + date +
-                ", teacher=" + teacher +
-                ", student=" + student +
+                ", day='" + day + '\'' +
+                ", hourFrom='" + hourFrom + '\'' +
+                ", hourTo='" + hourTo + '\'' +
+                ", isFree=" + isFree +
+                ", isConfirmed=" + isConfirmed +
+                ", lesson=" + lesson +
                 '}';
     }
 }

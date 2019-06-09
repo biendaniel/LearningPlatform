@@ -16,6 +16,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private String description;
     @ManyToOne
     private Subject subject;
     @OneToMany()
@@ -73,6 +74,14 @@ public class Course {
         this.opinions = opinions;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
     @Override
     public String toString() {
@@ -94,11 +103,13 @@ public class Course {
                 Objects.equals(name, course.name) &&
                 Objects.equals(subject, course.subject) &&
                 Objects.equals(chapters, course.chapters) &&
-                Objects.equals(opinions, course.opinions);
+                Objects.equals(opinions, course.opinions) &&
+                Objects.equals(description, course.description)
+                ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, subject, chapters, opinions);
+        return Objects.hash(id, name, subject, chapters, opinions,description);
     }
 }

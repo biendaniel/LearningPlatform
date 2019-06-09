@@ -9,6 +9,7 @@ public class UserReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
+    @JoinColumn(name = "reportingUserId")
     private User reportingUser;
     private String description;
 
