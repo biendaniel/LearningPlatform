@@ -8,9 +8,9 @@
 
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <!--<property name="connection.url">jdbc:mysql://learningplatform.c2gsv4di4gzq.us-east-2.rds.amazonaws.com:3306/eLearning?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</property>-->
-        <property name="connection.url">jdbc:mysql://localhost:3306/lp?useSSL=false&amp;serverTimezone=UTC</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/localdb?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</property>
         <property name="connection.username">root</property>
-        <property name="connection.password"></property>
+        <property name="connection.password">password</property>
 
         <!-- JDBC connection pool settings ... using built-in test pool -->
         <property name="connection.pool_size">8</property>
@@ -32,9 +32,15 @@
         <mapping class="model.CourseChapter"/>
         <mapping class="model.Course"/>
         <mapping class="model.File"/>
+        <mapping class="model.UserOpinion"/>
+        <mapping class="model.CourseOpinion"/>
         <mapping class="model.Opinion"/>
         <mapping class="model.Lesson"/>
         <mapping class="model.LessonDate"/>
+        <mapping class="model.UserReport"/>
+        <mapping class="model.Message"/>
+        <mapping class="model.Conversation"/>
+
 
     </session-factory>
 </hibernate-configuration>
