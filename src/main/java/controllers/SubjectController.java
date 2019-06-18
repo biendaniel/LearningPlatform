@@ -27,8 +27,9 @@ public class SubjectController {
     }
 
     @POST
-    public void addSubject(Subject forwardedSubject) {
+    public boolean addSubject(Subject forwardedSubject) {
         subject.create(forwardedSubject);
+        return true;
     }
 
     @GET

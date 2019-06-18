@@ -23,14 +23,22 @@ public class LessonDateController {
     }
 
     @POST
-    public void addLessonDate(LessonDate forwardedLessonDate) {
+    public Boolean addLessonDate(LessonDate forwardedLessonDate) {
         lessonDate.create(forwardedLessonDate);
+        return true;
     }
 
     @GET
     @Path("/{id}")
     public LessonDate getLessonDateById(@PathParam("id") Integer id) {
         LessonDate loadedLessonDate = lessonDate.findById(id);
+        return loadedLessonDate;
+    }
+
+    @GET
+    @Path("/lesson/{id}")
+    public List<LessonDate> getLessonDateByIdLesson(@PathParam("id") Integer id) {
+        List<LessonDate> loadedLessonDate = lessonDate.findByLessonId(id);
         return loadedLessonDate;
     }
 

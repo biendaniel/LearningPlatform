@@ -50,14 +50,21 @@ public class UserController {
         return user.findAll();
     }
 
-    @POST
-    @Path("/{id}/addCourse")
-    public void addCourse(@PathParam("id") String username, Course newCourse) {
-        course.create(newCourse);
-        user.updateUserCourses(username, newCourse);
+    @GET
+    @Path("/role/{id}")
+    public List<User> getUsersWithSpecificRole(@PathParam("id") Integer id) {
+        return user.findUserByRole(id);
     }
 
-    @PATCH
+    @POST
+    @Path("/{id}/addCourse")
+    public boolean addCourse(@PathParam("id") String username, Course newCourse) {
+        course.create(newCourse);
+        user.updateUserCourses(username, newCourse);
+        return true;
+    }
+
+    @POST
     @Path("/{id}/joinCourse")
     public void joinCourse(@PathParam("id") String username, Course course) {
         user.updateStudentCourses(username, course);
@@ -86,12 +93,11 @@ public class UserController {
         if (forwardedUser.getPassword() != null) {
             loadedUser.setPassword(forwardedUser.getPassword());
         }
-
         if(forwardedUser.getBlocked() != null) {
             if (forwardedUser.getBlocked().equals(true)) {
                 loadedUser.setBlocked(true);
             }
-            if (!forwardedUser.getBlocked().equals(false)) {
+            if (forwardedUser.getBlocked().equals(false)) {
                 loadedUser.setBlocked(false);
             }
         }
@@ -104,7 +110,6 @@ public class UserController {
         if (forwardedUser.getCourses() != null) {
             loadedUser.getCourses().add(forwardedUser.getCourses().stream().findFirst().get());
         }
-
         user.update(loadedUser);
     }
 

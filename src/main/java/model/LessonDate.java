@@ -1,20 +1,21 @@
 package model;
 
 import javax.persistence.*;
-import java.text.DateFormat;
 
 @Entity
 public class LessonDate {
 
-    //TODO - Tutaj stworzlem tylko pola - możliwe, że trzeba dodać jeszcze relacje
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String day;
     private String hourFrom;
     private String hourTo;
-    private Boolean isFree;
-    private Boolean isConfirmed;
+    private String isFree;
+    private String isConfirmed;
+
+    @ManyToOne
+    @JoinColumn(name = "day_id")
+    private LessonDay day;
 
     @ManyToOne
     @JoinColumn(name = "lesson_id")
@@ -24,7 +25,15 @@ public class LessonDate {
     @JoinColumn(name = "student_id")
     private User user;
 
-
+       public LessonDate(String hourFrom, String hourTo, String isFree, String isConfirmed, LessonDay day, Lesson lesson, User user) {
+        this.hourFrom = hourFrom;
+        this.hourTo = hourTo;
+        this.isFree = isFree;
+        this.isConfirmed = isConfirmed;
+        this.day = day;
+        this.lesson = lesson;
+        this.user = user;
+    }
 
     public LessonDate() {
     }
@@ -35,14 +44,6 @@ public class LessonDate {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
     }
 
     public String getHourFrom() {
@@ -61,21 +62,11 @@ public class LessonDate {
         this.hourTo = hourTo;
     }
 
-    public Boolean getFree() {
-        return isFree;
+    public LessonDay getDay() {
+        return day;
     }
 
-    public void setFree(Boolean free) {
-        isFree = free;
-    }
-
-    public Boolean getConfirmed() {
-        return isConfirmed;
-    }
-
-    public void setConfirmed(Boolean confirmed) {
-        isConfirmed = confirmed;
-    }
+    public void setDay(LessonDay day) { this.day = day; }
 
     public Lesson getLesson() {
         return lesson;
@@ -93,16 +84,34 @@ public class LessonDate {
         this.user = user;
     }
 
+    public String getIsFree() {
+        return isFree;
+    }
+
+    public void setIsFree(String isFree) {
+        this.isFree = isFree;
+    }
+
+    public String getIsConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setIsConfirmed(String isConfirmed) {
+        this.isConfirmed = isConfirmed;
+    }
+
+
     @Override
     public String toString() {
         return "LessonDate{" +
                 "id=" + id +
-                ", day='" + day + '\'' +
                 ", hourFrom='" + hourFrom + '\'' +
                 ", hourTo='" + hourTo + '\'' +
-                ", isFree=" + isFree +
-                ", isConfirmed=" + isConfirmed +
+                ", isFree='" + isFree + '\'' +
+                ", isConfirmed='" + isConfirmed + '\'' +
+                ", day=" + day +
                 ", lesson=" + lesson +
+                ", user=" + user +
                 '}';
     }
 }

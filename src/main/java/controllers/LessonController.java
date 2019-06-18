@@ -23,8 +23,9 @@ public class LessonController {
     }
 
     @POST
-    public void addLesson(Lesson forwardedLesson) {
+    public boolean addLesson(Lesson forwardedLesson) {
         lesson.create(forwardedLesson);
+        return true;
     }
 
     @GET
@@ -53,5 +54,19 @@ public class LessonController {
     public void deleteLesson(@PathParam("id") Integer id) {
         Lesson loadedLesson = lesson.findById(id);
         lesson.delete(loadedLesson);
+    }
+
+    @GET
+    @Path("/user/{id}")
+    public List<Lesson> getLessonForUser(@PathParam("id") Integer id) {
+        List<Lesson> loadedLesson = lesson.findLessonForUser(id);
+        return loadedLesson;
+    }
+
+    @GET
+    @Path("/find/{name}/{address}")
+    public List<Lesson> getLessonForUser(@PathParam("name") String name ,@PathParam("address") String address) {
+        List<Lesson> loadedLesson = lesson.findLessonByName(name,address);
+        return loadedLesson;
     }
 }

@@ -1,10 +1,7 @@
 package dao;
 
 
-import model.Course;
-import model.User;
-import model.UserOpinion;
-import model.UserReport;
+import model.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -26,6 +23,20 @@ public class UserDao extends DaoAbstract<User, Integer> {
         connectionDB.closeCurrentSession();
         return users;
     }
+
+    public List<User> findUserByRole(Integer idRoli) {
+        connectionDB.openCurrentSession();
+        Role role = new Role();
+        role.setId(idRoli);
+        Query query = connectionDB.getCurrentSession().createQuery("FROM User where role =: role");
+        List<User> users =  query
+                .setParameter("role", role)
+                .getResultList();
+        connectionDB.closeCurrentSession();
+        return users;
+    }
+
+
 
     public User findUserByUsernameAndPassword(String username, String password) {
         connectionDB.openCurrentSession();
